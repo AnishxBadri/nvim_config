@@ -21,7 +21,7 @@ return require('packer').startup(function(use)
     }
 	use('tpope/vim-fugitive')
     use('theprimeagen/harpoon')	
-
+    use('Exafunction/codeium.vim')
     use {
         "windwp/nvim-autopairs",
         event = "InsertEnter",

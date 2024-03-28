@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/Users/anishkumarbadri/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
+  ["codeium.vim"] = {
+    loaded = true,
+    path = "/Users/anishkumarbadri/.local/share/nvim/site/pack/packer/start/codeium.vim",
+    url = "https://github.com/Exafunction/codeium.vim"
+  },
   harpoon = {
     loaded = true,
     path = "/Users/anishkumarbadri/.local/share/nvim/site/pack/packer/start/harpoon",
