@@ -7,19 +7,28 @@ return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 
-
-	use({ 'rose-pine/neovim', as = 'rose-pine' })
-
-	vim.cmd('colorscheme rose-pine')
+	vim.cmd('colorscheme catppuccin-mocha')
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 	use('nvim-treesitter/playground')
 	use('mbbill/undotree')
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.6',
-        -- or                            , branch = '0.1.x',
-        requires = { {'nvim-lua/plenary.nvim'} }
+        "nvim-telescope/telescope.nvim",
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+            { "nvim-telescope/telescope-live-grep-args.nvim" },
+        },
+        config = function()
+            require("telescope").load_extension("live_grep_args")
+        end
     }
 	use('tpope/vim-fugitive')
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    }
+
+    use {'airblade/vim-gitgutter'}
+
     use('theprimeagen/harpoon')	
     use('Exafunction/codeium.vim')
     use {
@@ -28,7 +37,26 @@ return require('packer').startup(function(use)
         config = function()
             require("nvim-autopairs").setup {}
         end
-    }	
+    }
+
+    use { "catppuccin/nvim", as = "catppuccin" }
+
+    use {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        requires = { 
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons", 
+            "MunifTanjim/nui.nvim",
+        }
+    }
+
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
 
     use { 'VonHeikemen/lsp-zero.nvim',
 		branch = 'v3.x',

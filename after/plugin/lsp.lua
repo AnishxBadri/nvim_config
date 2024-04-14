@@ -41,6 +41,13 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
+
+lspconfig.tsserver.setup {
+    root_dir = lspconfig.util.root_pattern("yarn.lock", "lerna.json", ".git"),
+    on_attach = on_attach,
+    settings = {documentFormatting = true}
+}
+
 lspconfig.pylsp.setup {
 	on_attach = custom_attach,
 	settings = {
