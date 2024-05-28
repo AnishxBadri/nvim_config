@@ -27,11 +27,12 @@ return require('packer').startup(function(use)
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
 
-    use {'airblade/vim-gitgutter'}
+    use('lewis6991/gitsigns.nvim')
 
     use('theprimeagen/harpoon')	
     use('Exafunction/codeium.vim')
     use {
+    -- use {'airblade/vim-gitgutter'}
         "windwp/nvim-autopairs",
         event = "InsertEnter",
         config = function()
