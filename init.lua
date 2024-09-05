@@ -1,7 +1,2 @@
-require("anish.init")
-require("anish.packer")
-require('lualine').setup{
-    options = {
-        theme = 'catppuccin'
-    }
-}
+vim.g.mapleader = " "
+require("config.lazy") -- lazy load
