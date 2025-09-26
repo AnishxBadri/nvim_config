@@ -122,6 +122,10 @@ return {
 		end,
 	},
 
+	{
+		"ThePrimeagen/vim-be-good",
+	},
+
 	-- Harpoon plugin configuration
 	{
 		"ThePrimeagen/harpoon",
