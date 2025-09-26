@@ -1,5 +1,8 @@
 return {
 	-- Color scheme
+
+	{ "Mofiqul/dracula.nvim" },
+
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
