@@ -12,19 +12,27 @@ return {
 		end,
 	},
 
-	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false,
 		build = ":TSUpdate",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = { "lua", "vim", "vimdoc", "javascript", "typescript", "python", "c" },
-				sync_install = false,
-				auto_install = true,
-				highlight = { enable = true },
-				indent = { enable = true },
-			})
-		end,
+		highlight = {
+			enable = true,
+			additional_vim_regex_highlighting = false,
+		},
+		ensure_installed = {
+			"c",
+			"lua",
+			"vim",
+			"vimdoc",
+			"query",
+			"markdown",
+			"markdown_inline",
+			"javascript",
+			"typescript",
+			"python",
+		},
 	},
 
 	-- Telescope
@@ -35,7 +43,7 @@ return {
 			{ "<leader>ps", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
 			{ "<leader>pf", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
 			{ "<leader>vh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
-			{ "<C-p", LazyVim.pick("git_files"), desc = "Find git files" },
+			{ "<leader>fg", LazyVim.pick("git_files"), desc = "Find git files" },
 		},
 	},
 
@@ -47,13 +55,38 @@ return {
 			"hrsh7th/nvim-cmp",
 			"hrsh7th/cmp-nvim-lsp",
 			"L3MON4D3/LuaSnip",
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
+			"mason-org/mason.nvim",
+			"mason-org/mason-lspconfig.nvim",
 		},
 		config = function()
 			require("mason").setup()
 			require("mason-lspconfig").setup({
 				ensure_installed = { "lua_ls", "ts_ls", "pylsp", "rust_analyzer", "astro", "zls", "cssls" },
+			})
+
+			vim.diagnostic.config({
+				-- Display style for the diagnostic text (underline is typically default)
+				underline = true,
+
+				-- Enable virtual text (the message text next to the code line)
+				-- If this is set to false, you won't see the message inline.
+				virtual_text = {
+					-- Show the message itself inline
+					source = "always",
+					-- Set prefix to an icon (optional)
+					prefix = "●",
+				},
+
+				-- Configure the floating window that appears on hover (K)
+				float = {
+					border = "single", -- Adds a nice border
+					source = "always", -- Show the source (e.g., 'eslint')
+					-- Use the standard Neovim function for rendering the content
+					format = function(diagnostic)
+						return diagnostic.message
+					end,
+				},
+				update_in_insert = false,
 			})
 
 			local lspconfig = require("lspconfig")

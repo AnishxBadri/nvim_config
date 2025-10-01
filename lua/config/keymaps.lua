@@ -1,7 +1,9 @@
 local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
-  if opts then options = vim.tbl_extend("force", options, opts) end
-  vim.keymap.set(mode, lhs, rhs, options)
+	local options = { noremap = true, silent = true }
+	if opts then
+		options = vim.tbl_extend("force", options, opts)
+	end
+	vim.keymap.set(mode, lhs, rhs, options)
 end
 
 vim.g.mapleader = " "
@@ -28,11 +30,11 @@ map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
 -- Yank to system clipboard
-map({"n", "v"}, "<leader>y", [["+y]])
+map({ "n", "v" }, "<leader>y", [["+y]])
 map("n", "<leader>Y", [["+Y]])
 
 -- Delete without yanking
-map({"n", "v"}, "<leader>d", [["_d]])
+map({ "n", "v" }, "<leader>d", [["_d]])
 
 -- Misc
 map("i", "<C-c>", "<Esc>")
@@ -46,5 +48,7 @@ map("n", "<leader>j", "<cmd>lprev<CR>zz")
 map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 map("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/plugins/init.lua<CR>")
-map("n", "<leader><leader>", function() vim.cmd("so") end)
+map("n", "<leader><leader>", function()
+	vim.cmd("so")
+end)
 map("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
