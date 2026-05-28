@@ -1,14 +1,11 @@
 return {
 	-- Color scheme
 
-	{ "Mofiqul/dracula.nvim" },
-
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		priority = 1000,
+		"nyoom-engineering/oxocarbon.nvim",
+		name = "oxocarbon",
 		config = function()
-			vim.cmd.colorscheme("catppuccin-mocha")
+			vim.opt.background = "dark"
 		end,
 	},
 
@@ -61,7 +58,7 @@ return {
 		config = function()
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "ts_ls", "pylsp", "rust_analyzer", "astro", "zls", "cssls" },
+				ensure_installed = { "lua_ls", "ts_ls", "pylsp", "rust_analyzer", "astro", "zls" },
 			})
 
 			vim.diagnostic.config({
@@ -107,12 +104,27 @@ return {
 			end
 
 			lspconfig.lua_ls.setup({ on_attach = on_attach, capabilities = capabilities })
-			lspconfig.ts_ls.setup({ on_attach = on_attach, capabilities = capabilities })
+			lspconfig.ts_ls.setup({
+				on_attach = on_attach,
+				capabilities = capabilities,
+				root_dir = function(fname)
+					local util = require("lspconfig.util")
+					-- 1. Search for the absolute top-level monorepo markers first
+					local monorepo_root = util.root_pattern("turbo.json", "pnpm-workspace.yaml")(fname)
+					if monorepo_root then
+						return monorepo_root
+					end
+
+					-- 2. If not in a monorepo, fallback to standard project markers
+					return util.root_pattern("package.json", "tsconfig.json", ".git")(fname)
+				end,
+				single_file_support = false,
+			})
 			lspconfig.pylsp.setup({ on_attach = on_attach, capabilities = capabilities })
 			lspconfig.zls.setup({ on_attach = on_attach, capabilities = capabilities })
 			lspconfig.rust_analyzer.setup({ on_attach = on_attach, capabilities = capabilities })
 			lspconfig.astro.setup({ on_attach = on_attach, capabilities = capabilities })
-			lspconfig.cssls.setup({ on_attach = on_attach, capabilities = capabilities })
+			-- lspconfig.cssls.setup({ on_attach = on_attach, capabilities = capabilities })
 
 			local cmp = require("cmp")
 			cmp.setup({
@@ -160,6 +172,10 @@ return {
 
 	{
 		"ThePrimeagen/vim-be-good",
+	},
+
+	{
+		"rktjmp/lush.nvim",
 	},
 
 	-- Harpoon plugin configuration
@@ -270,7 +286,7 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		config = function()
-			require("lualine").setup({ theme = "catppuccin" })
+			require("lualine").setup({ theme = "ayu_dark" })
 		end,
 	},
 	{
