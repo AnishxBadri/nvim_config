@@ -11,6 +11,7 @@ local CORE = {
 local PLUGINS = {
 	"telescope",
 	"snacks",
+	"neo-tree",
 }
 
 function M.load()
@@ -67,33 +68,6 @@ function M.load()
 	hi("CmpItemKindColor", { fg = p.rose })
 	hi("CmpItemKindFile", { fg = p.fg_dim })
 	hi("CmpItemKindFolder", { fg = p.sky })
-
-	-- ── neo-tree ───────────────────────────────────────────────────────────────
-	hi("NeoTreeNormal", { fg = p.fg, bg = p.bg_code })
-	hi("NeoTreeNormalNC", { fg = p.fg, bg = p.bg_code })
-	hi("NeoTreeEndOfBuffer", { fg = p.bg_code, bg = p.bg_code })
-	hi("NeoTreeRootName", { fg = p.fg_bright, bold = true })
-	hi("NeoTreeDirectoryName", { fg = p.fg })
-	hi("NeoTreeDirectoryIcon", { fg = p.sky })
-	hi("NeoTreeFileName", { fg = p.fg })
-	hi("NeoTreeFileNameOpened", { fg = p.mint, italic = true })
-	hi("NeoTreeFileIcon", { fg = p.fg_dim })
-	hi("NeoTreeSymbolicLinkTarget", { fg = p.amber_br, italic = true })
-	hi("NeoTreeGitAdded", { fg = p.mint })
-	hi("NeoTreeGitConflict", { fg = p.red, bold = true })
-	hi("NeoTreeGitDeleted", { fg = p.red })
-	hi("NeoTreeGitIgnored", { fg = p.comment })
-	hi("NeoTreeGitModified", { fg = p.amber })
-	hi("NeoTreeGitUnstaged", { fg = p.amber })
-	hi("NeoTreeGitUntracked", { fg = p.fg_dim })
-	hi("NeoTreeGitStaged", { fg = p.mint })
-	hi("NeoTreeIndentMarker", { fg = p.gray })
-	hi("NeoTreeExpander", { fg = p.fg_dim })
-	hi("NeoTreeTabActive", { fg = p.fg_bright, bg = p.bg, bold = true })
-	hi("NeoTreeTabInactive", { fg = p.fg_dim, bg = p.bg_code })
-	hi("NeoTreeTabSeparatorActive", { fg = p.bg, bg = p.bg })
-	hi("NeoTreeTabSeparatorInactive", { fg = p.bg_code, bg = p.bg_code })
-	hi("NeoTreeWinSeparator", { fg = p.gray, bg = p.bg_code })
 
 	-- ── which-key ──────────────────────────────────────────────────────────────
 	hi("WhichKey", { fg = p.sky })
