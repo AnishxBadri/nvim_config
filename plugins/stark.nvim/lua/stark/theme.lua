@@ -5,6 +5,7 @@ local GROUPS = {
 	"syntax",
 	"treesitter",
 	"lsp",
+	"markdown",
 }
 
 function M.load()
@@ -28,28 +29,6 @@ function M.load()
 	local hi = function(group, opts)
 		hl[group] = opts
 	end
-
-	-- markup
-	hi("@markup.strong", { fg = p.fg_bright, bold = true })
-	hi("@markup.italic", { fg = p.fg, italic = true })
-	hi("@markup.strikethrough", { fg = p.fg_dim, strikethrough = true })
-	hi("@markup.underline", { underline = true })
-	hi("@markup.heading.1", { fg = p.sky, bold = true })
-	hi("@markup.heading.2", { fg = p.mint, bold = true })
-	hi("@markup.heading.3", { fg = p.mint_br, bold = true })
-	hi("@markup.heading.4", { fg = p.amber_br, bold = true })
-	hi("@markup.heading.5", { fg = p.amber, bold = true })
-	hi("@markup.heading.6", { fg = p.rose, bold = true })
-	hi("@markup.quote", { fg = p.fg_dim, italic = true })
-	hi("@markup.math", { fg = p.amber_br })
-	hi("@markup.link", { fg = p.sky, underline = true })
-	hi("@markup.link.label", { fg = p.mint })
-	hi("@markup.link.url", { fg = p.sky, underline = true })
-	hi("@markup.raw", { fg = p.mint, bg = p.bg_code })
-	hi("@markup.raw.block", { fg = p.mint, bg = p.bg_code })
-	hi("@markup.list", { fg = p.fg_dim })
-	hi("@markup.list.checked", { fg = p.mint })
-	hi("@markup.list.unchecked", { fg = p.fg_dim })
 
 	-- ── Telescope ──────────────────────────────────────────────────────────────
 	hi("TelescopeNormal", { fg = p.fg, bg = p.bg_code })
