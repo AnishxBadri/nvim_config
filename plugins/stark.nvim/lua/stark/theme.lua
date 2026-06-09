@@ -4,6 +4,7 @@ local GROUPS = {
 	"editor",
 	"syntax",
 	"treesitter",
+	"lsp",
 }
 
 function M.load()
@@ -49,73 +50,6 @@ function M.load()
 	hi("@markup.list", { fg = p.fg_dim })
 	hi("@markup.list.checked", { fg = p.mint })
 	hi("@markup.list.unchecked", { fg = p.fg_dim })
-
-	-- ── LSP semantic tokens ────────────────────────────────────────────────────
-	hi("@lsp.type.class", { link = "@type" })
-	hi("@lsp.type.comment", { link = "Comment" })
-	hi("@lsp.type.decorator", { fg = p.sky })
-	hi("@lsp.type.enum", { link = "@type" })
-	hi("@lsp.type.enumMember", { fg = p.amber })
-	hi("@lsp.type.function", { link = "@function" })
-	hi("@lsp.type.interface", { fg = p.amber })
-	hi("@lsp.type.keyword", { link = "@keyword" })
-	hi("@lsp.type.macro", { fg = p.sky })
-	hi("@lsp.type.method", { link = "@function.method" })
-	hi("@lsp.type.namespace", { link = "@module" })
-	hi("@lsp.type.number", { link = "@number" })
-	hi("@lsp.type.operator", { link = "@operator" })
-	hi("@lsp.type.parameter", { link = "@variable.parameter" })
-	hi("@lsp.type.property", { link = "@property" })
-	hi("@lsp.type.selfKeyword", { fg = p.rose, italic = true })
-	hi("@lsp.type.string", { link = "@string" })
-	hi("@lsp.type.struct", { link = "@type" })
-	hi("@lsp.type.type", { link = "@type" })
-	hi("@lsp.type.typeParameter", { fg = p.amber })
-	hi("@lsp.type.variable", { link = "@variable" })
-	hi("@lsp.typemod.function.defaultLibrary", { fg = p.amber_br, italic = true })
-	hi("@lsp.typemod.variable.defaultLibrary", { fg = p.rose, italic = true })
-	hi("@lsp.typemod.variable.readonly", { fg = p.fg })
-	hi("@lsp.typemod.keyword.documentation", { fg = p.sky })
-
-	-- ── Diagnostics ────────────────────────────────────────────────────────────
-	hi("DiagnosticError", { fg = p.red })
-	hi("DiagnosticWarn", { fg = p.amber })
-	hi("DiagnosticInfo", { fg = p.sky })
-	hi("DiagnosticHint", { fg = p.mint })
-	hi("DiagnosticOk", { fg = p.mint })
-
-	hi("DiagnosticSignError", { fg = p.red })
-	hi("DiagnosticSignWarn", { fg = p.amber })
-	hi("DiagnosticSignInfo", { fg = p.sky })
-	hi("DiagnosticSignHint", { fg = p.mint })
-
-	hi("DiagnosticVirtualTextError", { fg = p.red, italic = true })
-	hi("DiagnosticVirtualTextWarn", { fg = p.amber, italic = true })
-	hi("DiagnosticVirtualTextInfo", { fg = p.sky, italic = true })
-	hi("DiagnosticVirtualTextHint", { fg = p.mint, italic = true })
-	hi("DiagnosticVirtualTextOk", { fg = p.mint, italic = true })
-
-	hi("DiagnosticUnderlineError", { undercurl = true, sp = p.red })
-	hi("DiagnosticUnderlineWarn", { undercurl = true, sp = p.amber })
-	hi("DiagnosticUnderlineInfo", { undercurl = true, sp = p.sky })
-	hi("DiagnosticUnderlineHint", { undercurl = true, sp = p.mint })
-
-	hi("DiagnosticFloatingError", { fg = p.red })
-	hi("DiagnosticFloatingWarn", { fg = p.amber })
-	hi("DiagnosticFloatingInfo", { fg = p.sky })
-	hi("DiagnosticFloatingHint", { fg = p.mint })
-
-	hi("DiagnosticDeprecated", { fg = p.fg_dim, strikethrough = true })
-	hi("DiagnosticUnnecessary", { fg = p.comment, italic = true })
-
-	-- ── LSP references / misc ──────────────────────────────────────────────────
-	hi("LspReferenceText", { bg = p.bg_hover })
-	hi("LspReferenceRead", { bg = p.bg_hover })
-	hi("LspReferenceWrite", { bg = p.bg_hover, underline = true })
-	hi("LspSignatureActiveParameter", { fg = p.amber_br, bold = true, underline = true })
-	hi("LspInlayHint", { fg = p.comment, bg = p.bg_code, italic = true })
-	hi("LspCodeLens", { fg = p.comment, italic = true })
-	hi("LspCodeLensSeparator", { fg = p.comment })
 
 	-- ── Telescope ──────────────────────────────────────────────────────────────
 	hi("TelescopeNormal", { fg = p.fg, bg = p.bg_code })
