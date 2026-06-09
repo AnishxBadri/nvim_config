@@ -15,6 +15,10 @@ local PLUGINS = {
 	"cmp",
 	"gitsigns",
 	"lazy",
+	"mini",
+	"whichkey",
+	"notify",
+	"indent",
 }
 
 function M.load()
@@ -38,88 +42,6 @@ function M.load()
 	local hi = function(group, opts)
 		hl[group] = opts
 	end
-
-	-- ── which-key ──────────────────────────────────────────────────────────────
-	hi("WhichKey", { fg = p.sky })
-	hi("WhichKeyGroup", { fg = p.mint, bold = true })
-	hi("WhichKeyDesc", { fg = p.fg })
-	hi("WhichKeySeperator", { fg = p.comment })
-	hi("WhichKeySeparator", { fg = p.comment })
-	hi("WhichKeyFloat", { bg = p.bg_code })
-	hi("WhichKeyBorder", { fg = p.gray, bg = p.bg_code })
-	hi("WhichKeyValue", { fg = p.fg_dim })
-	hi("WhichKeyTitle", { fg = p.fg_bright, bold = true })
-
-	-- ── nvim-notify ────────────────────────────────────────────────────────────
-	hi("NotifyERRORBorder", { fg = p.red })
-	hi("NotifyWARNBorder", { fg = p.amber })
-	hi("NotifyINFOBorder", { fg = p.sky })
-	hi("NotifyDEBUGBorder", { fg = p.comment })
-	hi("NotifyTRACEBorder", { fg = p.sky_br })
-	hi("NotifyERRORIcon", { fg = p.red })
-	hi("NotifyWARNIcon", { fg = p.amber })
-	hi("NotifyINFOIcon", { fg = p.sky })
-	hi("NotifyDEBUGIcon", { fg = p.comment })
-	hi("NotifyTRACEIcon", { fg = p.sky_br })
-	hi("NotifyERRORTitle", { fg = p.red, bold = true })
-	hi("NotifyWARNTitle", { fg = p.amber, bold = true })
-	hi("NotifyINFOTitle", { fg = p.sky, bold = true })
-	hi("NotifyDEBUGTitle", { fg = p.fg_dim, bold = true })
-	hi("NotifyTRACETitle", { fg = p.sky_br, bold = true })
-	hi("NotifyERRORBody", { fg = p.fg, bg = p.bg_code })
-	hi("NotifyWARNBody", { fg = p.fg, bg = p.bg_code })
-	hi("NotifyINFOBody", { fg = p.fg, bg = p.bg_code })
-	hi("NotifyDEBUGBody", { fg = p.fg, bg = p.bg_code })
-	hi("NotifyTRACEBody", { fg = p.fg, bg = p.bg_code })
-
-	-- ── indent-blankline ───────────────────────────────────────────────────────
-	hi("IblIndent", { fg = p.gray })
-	hi("IblScope", { fg = p.fg_dim })
-	hi("IblWhitespace", { fg = p.gray })
-	hi("IndentBlanklineChar", { fg = p.gray })
-	hi("IndentBlanklineContextChar", { fg = p.fg_dim })
-	hi("IndentBlanklineContextStart", { underline = true, sp = p.fg_dim })
-
-	-- ── mini.nvim ──────────────────────────────────────────────────────────────
-	hi("MiniStatuslineModeNormal", { fg = p.bg, bg = p.mint, bold = true })
-	hi("MiniStatuslineModeInsert", { fg = p.bg, bg = p.sky, bold = true })
-	hi("MiniStatuslineModeVisual", { fg = p.bg, bg = p.rose, bold = true })
-	hi("MiniStatuslineModeReplace", { fg = p.bg, bg = p.red, bold = true })
-	hi("MiniStatuslineModeCommand", { fg = p.bg, bg = p.amber, bold = true })
-	hi("MiniStatuslineModeOther", { fg = p.bg, bg = p.gray, bold = true })
-	hi("MiniStatuslineFilename", { fg = p.fg, bg = p.bg_code })
-	hi("MiniStatuslineFileinfo", { fg = p.fg_dim, bg = p.bg_code })
-	hi("MiniStatuslineDevinfo", { fg = p.fg_dim, bg = p.bg_code })
-	hi("MiniStatuslineInactive", { fg = p.fg_dim, bg = p.bg_code })
-	hi("MiniCursorword", { bg = p.bg_hover })
-	hi("MiniCursorwordCurrent", { bg = p.bg_hover, underline = true })
-	hi("MiniIndentscopeSymbol", { fg = p.fg_dim })
-	hi("MiniIndentscopePrefix", { nocombine = true })
-	hi("MiniPickMatchCurrent", { fg = p.fg_bright, bg = p.bg_hover })
-	hi("MiniPickMatchRanges", { fg = p.sky, bold = true })
-	hi("MiniPickBorder", { fg = p.gray, bg = p.bg_code })
-	hi("MiniPickBorderBusy", { fg = p.amber, bg = p.bg_code })
-	hi("MiniPickBorderText", { fg = p.sky, bg = p.bg_code, bold = true })
-	hi("MiniPickNormal", { fg = p.fg, bg = p.bg_code })
-	hi("MiniPickPrompt", { fg = p.sky, bg = p.bg_code, bold = true })
-	hi("MiniPickHeader", { fg = p.rose, bold = true })
-	hi("MiniPickIconDirectory", { fg = p.sky })
-	hi("MiniPickIconFile", { fg = p.fg_dim })
-	hi("MiniDiffSignAdd", { fg = p.mint })
-	hi("MiniDiffSignChange", { fg = p.amber })
-	hi("MiniDiffSignDelete", { fg = p.red })
-	hi("MiniDiffOverAdd", { bg = p.diff_add })
-	hi("MiniDiffOverChange", { bg = p.diff_chg })
-	hi("MiniDiffOverDelete", { bg = p.diff_del })
-	hi("MiniDiffOverContext", { bg = p.bg_code })
-	hi("MiniJump", { fg = p.bg, bg = p.amber_br })
-	hi("MiniJump2dSpot", { fg = p.amber_br, bold = true, nocombine = true })
-	hi("MiniJump2dSpotAhead", { fg = p.mint, nocombine = true })
-	hi("MiniJump2dSpotUnique", { fg = p.amber, bold = true, nocombine = true })
-	hi("MiniHipatternsFixme", { fg = p.bg, bg = p.red, bold = true })
-	hi("MiniHipatternsTodo", { fg = p.bg, bg = p.amber_br, bold = true })
-	hi("MiniHipatternsNote", { fg = p.bg, bg = p.sky, bold = true })
-	hi("MiniHipatternsHack", { fg = p.bg, bg = p.amber, bold = true })
 
 	-- ── Merge core group files ─────────────────────────────────────────────────
 	for _, name in ipairs(CORE) do
