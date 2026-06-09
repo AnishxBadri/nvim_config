@@ -1,7 +1,6 @@
 # stark.nvim
 
-Neovim colorscheme matching the `stark` Ghostty theme.
-Black background, off-white foreground, mint + amber + sky accents.
+Minimal dark Neovim colorscheme. Black background, off-white foreground, mint + amber + sky accents.
 
 | Role        | Color     |
 |-------------|-----------|

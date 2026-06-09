@@ -34,14 +34,7 @@ function M.load()
 	vim.o.termguicolors = true
 	vim.g.colors_name = "stark"
 
-	local italic_c = cfg.italic_comments or nil
-	local italic_imp = cfg.italic_imports or nil
-	local kw_bold = cfg.bold_keywords or nil
-
 	local hl = {}
-	local hi = function(group, opts)
-		hl[group] = opts
-	end
 
 	-- ── Merge core group files ─────────────────────────────────────────────────
 	for _, name in ipairs(CORE) do
@@ -67,7 +60,7 @@ function M.load()
 		vim.api.nvim_set_hl(0, k, v)
 	end
 
-	-- ── Terminal colors (mirrors stark ghostty palette) ────────────────────────
+	-- ── Terminal colors ────────────────────────────────────────────────────────
 	vim.g.terminal_color_0 = p.black
 	vim.g.terminal_color_1 = p.red
 	vim.g.terminal_color_2 = p.mint
