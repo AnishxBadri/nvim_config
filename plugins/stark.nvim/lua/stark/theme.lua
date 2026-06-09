@@ -10,6 +10,7 @@ local CORE = {
 
 local PLUGINS = {
 	"telescope",
+	"snacks",
 }
 
 function M.load()
@@ -173,39 +174,6 @@ function M.load()
 	hi("LazyCommit", { fg = p.mint })
 	hi("LazyCommitType", { fg = p.sky })
 	hi("LazyCommitScope", { fg = p.rose })
-
-	-- ── snacks.nvim ────────────────────────────────────────────────────────────
-	hi("SnacksPickerBorder", { fg = p.gray, bg = p.bg_code })
-	hi("SnacksPickerTitle", { fg = p.bg, bg = p.sky, bold = true })
-	hi("SnacksPickerPreviewTitle", { fg = p.bg, bg = p.mint, bold = true })
-	hi("SnacksPickerInputTitle", { fg = p.bg, bg = p.sky, bold = true })
-	hi("SnacksPickerNormal", { fg = p.fg, bg = p.bg_code })
-	hi("SnacksPickerPreview", { fg = p.fg, bg = p.bg })
-	hi("SnacksPickerPrompt", { fg = p.sky })
-	hi("SnacksPickerSearch", { fg = p.amber_br, bold = true })
-	hi("SnacksPickerMatch", { fg = p.sky, bold = true })
-	hi("SnacksPickerSelected", { fg = p.mint })
-	hi("SnacksPickerDir", { fg = p.fg_dim })
-	hi("SnacksDashboardHeader", { fg = p.mint })
-	hi("SnacksDashboardFooter", { fg = p.comment, italic = true })
-	hi("SnacksDashboardDesc", { fg = p.fg })
-	hi("SnacksDashboardKey", { fg = p.sky })
-	hi("SnacksDashboardAction", { fg = p.sky })
-	hi("SnacksDashboardSpecial", { fg = p.rose })
-	hi("SnacksDashboardDir", { fg = p.fg_dim })
-	hi("SnacksNotifierInfo", { fg = p.sky })
-	hi("SnacksNotifierWarn", { fg = p.amber })
-	hi("SnacksNotifierError", { fg = p.red })
-	hi("SnacksNotifierDebug", { fg = p.comment })
-	hi("SnacksNotifierTrace", { fg = p.sky_br })
-	hi("SnacksNotifierBorderInfo", { fg = p.sky })
-	hi("SnacksNotifierBorderWarn", { fg = p.amber })
-	hi("SnacksNotifierBorderError", { fg = p.red })
-	hi("SnacksNotifierBorderDebug", { fg = p.comment })
-	hi("SnacksNotifierBorderTrace", { fg = p.sky_br })
-	hi("SnacksIndent", { fg = p.gray })
-	hi("SnacksIndentScope", { fg = p.fg_dim })
-	hi("SnacksWordUnderCursor", { bg = p.bg_hover })
 
 	-- ── mini.nvim ──────────────────────────────────────────────────────────────
 	hi("MiniStatuslineModeNormal", { fg = p.bg, bg = p.mint, bold = true })
