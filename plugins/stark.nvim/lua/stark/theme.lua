@@ -13,6 +13,8 @@ local PLUGINS = {
 	"snacks",
 	"neo-tree",
 	"cmp",
+	"gitsigns",
+	"lazy",
 }
 
 function M.load()
@@ -77,45 +79,6 @@ function M.load()
 	hi("IndentBlanklineChar", { fg = p.gray })
 	hi("IndentBlanklineContextChar", { fg = p.fg_dim })
 	hi("IndentBlanklineContextStart", { underline = true, sp = p.fg_dim })
-
-	-- ── gitsigns ───────────────────────────────────────────────────────────────
-	hi("GitSignsAdd", { fg = p.mint })
-	hi("GitSignsChange", { fg = p.amber })
-	hi("GitSignsDelete", { fg = p.red })
-	hi("GitSignsTopDelete", { fg = p.red })
-	hi("GitSignsChangeDelete", { fg = p.amber })
-	hi("GitSignsUntracked", { fg = p.fg_dim })
-	hi("GitSignsAddNr", { fg = p.mint })
-	hi("GitSignsChangeNr", { fg = p.amber })
-	hi("GitSignsDeleteNr", { fg = p.red })
-	hi("GitSignsAddLn", { bg = p.diff_add })
-	hi("GitSignsChangeLn", { bg = p.diff_chg })
-	hi("GitSignsDeleteLn", { bg = p.diff_del })
-	hi("GitSignsAddInline", { fg = p.mint, bg = p.diff_add, bold = true })
-	hi("GitSignsChangeInline", { fg = p.amber_br, bg = p.diff_txt, bold = true })
-	hi("GitSignsDeleteInline", { fg = p.red, bg = p.diff_del, bold = true })
-
-	-- ── lazy.nvim ──────────────────────────────────────────────────────────────
-	hi("LazyH1", { fg = p.bg, bg = p.mint, bold = true })
-	hi("LazyH2", { fg = p.fg_bright, bold = true })
-	hi("LazyButton", { fg = p.fg, bg = p.bg_code })
-	hi("LazyButtonActive", { fg = p.bg, bg = p.sky, bold = true })
-	hi("LazySpecial", { fg = p.sky })
-	hi("LazyReasonPlugin", { fg = p.sky })
-	hi("LazyReasonEvent", { fg = p.amber })
-	hi("LazyReasonKeys", { fg = p.mint })
-	hi("LazyReasonCmd", { fg = p.sky })
-	hi("LazyReasonFt", { fg = p.amber })
-	hi("LazyProgressDone", { fg = p.mint })
-	hi("LazyProgressTodo", { fg = p.fg_dim })
-	hi("LazyNoCond", { fg = p.comment })
-	hi("LazyDimmed", { fg = p.comment })
-	hi("LazyProp", { fg = p.mint })
-	hi("LazyValue", { fg = p.amber })
-	hi("LazyUrl", { fg = p.sky, underline = true })
-	hi("LazyCommit", { fg = p.mint })
-	hi("LazyCommitType", { fg = p.sky })
-	hi("LazyCommitScope", { fg = p.rose })
 
 	-- ── mini.nvim ──────────────────────────────────────────────────────────────
 	hi("MiniStatuslineModeNormal", { fg = p.bg, bg = p.mint, bold = true })
