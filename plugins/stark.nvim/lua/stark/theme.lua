@@ -1,7 +1,9 @@
 local M = {}
 
 function M.load()
-	local p = require("stark.palette")
+	local cfg = require("stark.config").options
+	local p = vim.deepcopy(require("stark.palette"))
+	cfg.on_colors(p)
 
 	vim.cmd("highlight clear")
 	if vim.fn.exists("syntax_on") == 1 then
@@ -11,13 +13,18 @@ function M.load()
 	vim.o.termguicolors = true
 	vim.g.colors_name = "stark"
 
+	local bg = cfg.transparent and "NONE" or p.bg
+	local italic_c = cfg.italic_comments or nil
+	local italic_imp = cfg.italic_imports or nil
+	local kw_bold = cfg.bold_keywords or nil
+
 	local hi = function(group, opts)
 		vim.api.nvim_set_hl(0, group, opts)
 	end
 
 	-- ── Editor chrome ──────────────────────────────────────────────────────────
-	hi("Normal", { fg = p.fg, bg = p.bg })
-	hi("NormalNC", { fg = p.fg, bg = p.bg })
+	hi("Normal", { fg = p.fg, bg = bg })
+	hi("NormalNC", { fg = p.fg, bg = bg })
 	hi("NormalFloat", { fg = p.fg, bg = p.bg_code })
 	hi("FloatBorder", { fg = p.fg_dim, bg = p.bg_code })
 	hi("FloatTitle", { fg = p.fg_bright, bg = p.bg_code, bold = true })
@@ -31,12 +38,12 @@ function M.load()
 	hi("LineNrAbove", { fg = p.fg_dim })
 	hi("LineNrBelow", { fg = p.fg_dim })
 
-	hi("SignColumn", { fg = p.fg_dim, bg = p.bg })
-	hi("FoldColumn", { fg = p.fg_dim, bg = p.bg })
+	hi("SignColumn", { fg = p.fg_dim, bg = bg })
+	hi("FoldColumn", { fg = p.fg_dim, bg = bg })
 	hi("Folded", { fg = p.fg_dim, bg = p.bg_code, italic = true })
 
-	hi("VertSplit", { fg = p.mint, bg = p.bg })
-	hi("WinSeparator", { fg = p.mint, bg = p.bg })
+	hi("VertSplit", { fg = p.mint, bg = bg })
+	hi("WinSeparator", { fg = p.mint, bg = bg })
 
 	hi("StatusLine", { fg = p.fg, bg = p.bg_code })
 	hi("StatusLineNC", { fg = p.fg_dim, bg = p.bg_code })
@@ -102,8 +109,8 @@ function M.load()
 	hi("Removed", { fg = p.red })
 
 	-- ── Legacy vim syntax ──────────────────────────────────────────────────────
-	hi("Comment", { fg = p.comment, italic = true })
-	hi("SpecialComment", { fg = p.fg_dim, italic = true })
+	hi("Comment", { fg = p.comment, italic = italic_c })
+	hi("SpecialComment", { fg = p.fg_dim, italic = italic_c })
 
 	hi("Constant", { fg = p.amber })
 	hi("String", { fg = p.mint })
@@ -115,12 +122,12 @@ function M.load()
 	hi("Identifier", { fg = p.fg })
 	hi("Function", { fg = p.amber_br })
 
-	hi("Statement", { fg = p.fg_bright, bold = true })
-	hi("Conditional", { fg = p.fg_bright, bold = true })
-	hi("Repeat", { fg = p.fg_bright, bold = true })
-	hi("Label", { fg = p.fg_bright, bold = true })
+	hi("Statement", { fg = p.fg_bright, bold = kw_bold })
+	hi("Conditional", { fg = p.fg_bright, bold = kw_bold })
+	hi("Repeat", { fg = p.fg_bright, bold = kw_bold })
+	hi("Label", { fg = p.fg_bright, bold = kw_bold })
 	hi("Operator", { fg = p.fg_dim })
-	hi("Keyword", { fg = p.fg_bright, bold = true })
+	hi("Keyword", { fg = p.fg_bright, bold = kw_bold })
 	hi("Exception", { fg = p.red, bold = true })
 
 	hi("PreProc", { fg = p.sky })
@@ -130,7 +137,7 @@ function M.load()
 	hi("PreCondit", { fg = p.sky })
 
 	hi("Type", { fg = p.amber })
-	hi("StorageClass", { fg = p.fg_bright, bold = true })
+	hi("StorageClass", { fg = p.fg_bright, bold = kw_bold })
 	hi("Structure", { fg = p.amber })
 	hi("Typedef", { fg = p.amber })
 
@@ -147,7 +154,7 @@ function M.load()
 
 	-- ── Treesitter ─────────────────────────────────────────────────────────────
 	hi("@comment", { link = "Comment" })
-	hi("@comment.documentation", { fg = p.fg_dim, italic = true })
+	hi("@comment.documentation", { fg = p.fg_dim, italic = italic_c })
 	hi("@comment.todo", { fg = p.amber_br, bold = true })
 	hi("@comment.warning", { fg = p.amber, bold = true })
 	hi("@comment.error", { fg = p.red, bold = true })
@@ -184,15 +191,15 @@ function M.load()
 	hi("@variable.parameter.builtin", { fg = p.rose, italic = true })
 	hi("@variable.member", { fg = p.mint })
 
-	hi("@keyword", { fg = p.fg_bright, bold = true })
-	hi("@keyword.function", { fg = p.fg_bright, bold = true })
-	hi("@keyword.operator", { fg = p.fg_bright, bold = true })
-	hi("@keyword.return", { fg = p.fg_bright, bold = true })
-	hi("@keyword.import", { fg = p.fg })
-	hi("@keyword.modifier", { fg = p.fg_bright, bold = true })
-	hi("@keyword.repeat", { fg = p.fg_bright, bold = true })
-	hi("@keyword.conditional", { fg = p.fg_bright, bold = true })
-	hi("@keyword.conditional.ternary", { fg = p.fg_bright, bold = true })
+	hi("@keyword", { fg = p.fg_bright, bold = kw_bold })
+	hi("@keyword.function", { fg = p.fg_bright, bold = kw_bold })
+	hi("@keyword.operator", { fg = p.fg_bright, bold = kw_bold })
+	hi("@keyword.return", { fg = p.fg_bright, bold = kw_bold })
+	hi("@keyword.import", { fg = italic_imp and p.fg_bright or p.fg, italic = italic_imp })
+	hi("@keyword.modifier", { fg = p.fg_bright, bold = kw_bold })
+	hi("@keyword.repeat", { fg = p.fg_bright, bold = kw_bold })
+	hi("@keyword.conditional", { fg = p.fg_bright, bold = kw_bold })
+	hi("@keyword.conditional.ternary", { fg = p.fg_bright, bold = kw_bold })
 	hi("@keyword.exception", { fg = p.red, bold = true })
 	hi("@keyword.directive", { fg = p.red })
 	hi("@keyword.coroutine", { fg = p.red })
@@ -200,7 +207,7 @@ function M.load()
 	hi("@type", { fg = p.amber })
 	hi("@type.builtin", { fg = p.amber, italic = true })
 	hi("@type.definition", { fg = p.amber, bold = true })
-	hi("@type.qualifier", { fg = p.fg_bright, bold = true })
+	hi("@type.qualifier", { fg = p.fg_bright, bold = kw_bold })
 
 	hi("@module", { fg = p.fg_bright })
 	hi("@module.builtin", { fg = p.fg_bright, italic = true })
@@ -245,7 +252,7 @@ function M.load()
 
 	-- misc
 	hi("@operator", { fg = p.fg_dim })
-	hi("@label", { fg = p.fg_bright, bold = true })
+	hi("@label", { fg = p.fg_bright, bold = kw_bold })
 	hi("@error", { fg = p.red, bold = true })
 	hi("@none", { fg = p.fg })
 	hi("@conceal", { fg = p.comment })
