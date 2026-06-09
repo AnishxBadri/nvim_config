@@ -1,11 +1,15 @@
 local M = {}
 
-local GROUPS = {
+local CORE = {
 	"editor",
 	"syntax",
 	"treesitter",
 	"lsp",
 	"markdown",
+}
+
+local PLUGINS = {
+	"telescope",
 }
 
 function M.load()
@@ -29,31 +33,6 @@ function M.load()
 	local hi = function(group, opts)
 		hl[group] = opts
 	end
-
-	-- ── Telescope ──────────────────────────────────────────────────────────────
-	hi("TelescopeNormal", { fg = p.fg, bg = p.bg_code })
-	hi("TelescopePromptNormal", { fg = p.fg, bg = p.bg_code })
-	hi("TelescopeResultsNormal", { fg = p.fg, bg = p.bg_code })
-	hi("TelescopePreviewNormal", { fg = p.fg, bg = p.bg })
-	hi("TelescopeBorder", { fg = p.gray, bg = p.bg_code })
-	hi("TelescopePromptBorder", { fg = p.sky, bg = p.bg_code })
-	hi("TelescopeResultsBorder", { fg = p.gray, bg = p.bg_code })
-	hi("TelescopePreviewBorder", { fg = p.gray, bg = p.bg })
-	hi("TelescopePromptPrefix", { fg = p.sky })
-	hi("TelescopePromptCounter", { fg = p.fg_dim })
-	hi("TelescopeSelection", { fg = p.fg_bright, bg = p.bg_hover })
-	hi("TelescopeSelectionCaret", { fg = p.sky, bg = p.bg_hover })
-	hi("TelescopeMultiSelection", { fg = p.mint, bg = p.bg_hover })
-	hi("TelescopeMultiIcon", { fg = p.mint })
-	hi("TelescopeTitle", { fg = p.fg_bright, bold = true })
-	hi("TelescopePromptTitle", { fg = p.bg, bg = p.sky, bold = true })
-	hi("TelescopeResultsTitle", { fg = p.fg_dim })
-	hi("TelescopePreviewTitle", { fg = p.bg, bg = p.mint, bold = true })
-	hi("TelescopeMatching", { fg = p.sky, bold = true })
-	hi("TelescopeResultsDiffAdd", { fg = p.mint })
-	hi("TelescopeResultsDiffChange", { fg = p.amber })
-	hi("TelescopeResultsDiffDelete", { fg = p.red })
-	hi("TelescopeResultsDiffUntracked", { fg = p.fg_dim })
 
 	-- ── nvim-cmp ───────────────────────────────────────────────────────────────
 	hi("CmpItemAbbr", { fg = p.fg })
@@ -269,10 +248,19 @@ function M.load()
 	hi("MiniHipatternsNote", { fg = p.bg, bg = p.sky, bold = true })
 	hi("MiniHipatternsHack", { fg = p.bg, bg = p.amber, bold = true })
 
-	-- ── Merge extracted group files ────────────────────────────────────────────
-	for _, name in ipairs(GROUPS) do
+	-- ── Merge core group files ─────────────────────────────────────────────────
+	for _, name in ipairs(CORE) do
 		for k, v in pairs(require("stark.groups." .. name).get(p, cfg)) do
 			hl[k] = v
+		end
+	end
+
+	-- ── Merge plugin group files (gated by cfg.plugins) ────────────────────────
+	for _, name in ipairs(PLUGINS) do
+		if cfg.plugins[name] then
+			for k, v in pairs(require("stark.groups.plugins." .. name).get(p, cfg)) do
+				hl[k] = v
+			end
 		end
 	end
 
