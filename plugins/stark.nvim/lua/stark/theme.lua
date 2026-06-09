@@ -12,6 +12,7 @@ local PLUGINS = {
 	"telescope",
 	"snacks",
 	"neo-tree",
+	"cmp",
 }
 
 function M.load()
@@ -35,39 +36,6 @@ function M.load()
 	local hi = function(group, opts)
 		hl[group] = opts
 	end
-
-	-- ── nvim-cmp ───────────────────────────────────────────────────────────────
-	hi("CmpItemAbbr", { fg = p.fg })
-	hi("CmpItemAbbrDeprecated", { fg = p.fg_dim, strikethrough = true })
-	hi("CmpItemAbbrMatch", { fg = p.sky, bold = true })
-	hi("CmpItemAbbrMatchFuzzy", { fg = p.sky })
-	hi("CmpItemMenu", { fg = p.fg_dim, italic = true })
-	hi("CmpItemKindDefault", { fg = p.fg_dim })
-	hi("CmpItemKindText", { fg = p.fg })
-	hi("CmpItemKindKeyword", { fg = p.fg_bright })
-	hi("CmpItemKindVariable", { fg = p.fg })
-	hi("CmpItemKindConstant", { fg = p.amber })
-	hi("CmpItemKindReference", { fg = p.rose })
-	hi("CmpItemKindValue", { fg = p.amber })
-	hi("CmpItemKindFunction", { fg = p.amber_br })
-	hi("CmpItemKindMethod", { fg = p.amber_br })
-	hi("CmpItemKindConstructor", { fg = p.amber_br })
-	hi("CmpItemKindClass", { fg = p.amber })
-	hi("CmpItemKindInterface", { fg = p.amber })
-	hi("CmpItemKindStruct", { fg = p.amber })
-	hi("CmpItemKindEvent", { fg = p.sky })
-	hi("CmpItemKindEnum", { fg = p.amber })
-	hi("CmpItemKindUnit", { fg = p.amber })
-	hi("CmpItemKindModule", { fg = p.fg_bright })
-	hi("CmpItemKindProperty", { fg = p.mint })
-	hi("CmpItemKindField", { fg = p.mint })
-	hi("CmpItemKindTypeParameter", { fg = p.amber })
-	hi("CmpItemKindEnumMember", { fg = p.amber })
-	hi("CmpItemKindOperator", { fg = p.fg_dim })
-	hi("CmpItemKindSnippet", { fg = p.sky })
-	hi("CmpItemKindColor", { fg = p.rose })
-	hi("CmpItemKindFile", { fg = p.fg_dim })
-	hi("CmpItemKindFolder", { fg = p.sky })
 
 	-- ── which-key ──────────────────────────────────────────────────────────────
 	hi("WhichKey", { fg = p.sky })
