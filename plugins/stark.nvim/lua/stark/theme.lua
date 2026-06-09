@@ -3,6 +3,7 @@ local M = {}
 local GROUPS = {
 	"editor",
 	"syntax",
+	"treesitter",
 }
 
 function M.load()
@@ -27,90 +28,6 @@ function M.load()
 		hl[group] = opts
 	end
 
-	-- ── Treesitter ─────────────────────────────────────────────────────────────
-	hi("@comment", { link = "Comment" })
-	hi("@comment.documentation", { fg = p.fg_dim, italic = italic_c })
-	hi("@comment.todo", { fg = p.amber_br, bold = true })
-	hi("@comment.warning", { fg = p.amber, bold = true })
-	hi("@comment.error", { fg = p.red, bold = true })
-	hi("@comment.note", { fg = p.sky, bold = true })
-
-	hi("@punctuation.delimiter", { fg = p.fg_dim })
-	hi("@punctuation.bracket", { fg = p.fg_dim })
-	hi("@punctuation.special", { fg = p.teal })
-
-	hi("@string", { link = "String" })
-	hi("@string.documentation", { fg = p.mint, italic = true })
-	hi("@string.regex", { fg = p.teal })
-	hi("@string.escape", { fg = p.teal, bold = true })
-	hi("@string.special", { fg = p.teal })
-	hi("@string.special.url", { fg = p.sky, underline = true })
-	hi("@string.special.symbol", { fg = p.rose })
-	hi("@character", { link = "Character" })
-	hi("@character.special", { fg = p.teal })
-	hi("@number", { link = "Number" })
-	hi("@number.float", { link = "Float" })
-	hi("@boolean", { link = "Boolean" })
-
-	hi("@function", { fg = p.amber_br })
-	hi("@function.builtin", { fg = p.amber_br, italic = true })
-	hi("@function.call", { fg = p.amber_br })
-	hi("@function.macro", { fg = p.sky })
-	hi("@function.method", { fg = p.amber_br })
-	hi("@function.method.call", { fg = p.amber_br })
-	hi("@constructor", { fg = p.amber_br })
-
-	hi("@variable", { fg = p.fg })
-	hi("@variable.builtin", { fg = p.rose, italic = true })
-	hi("@variable.parameter", { fg = p.rose })
-	hi("@variable.parameter.builtin", { fg = p.rose, italic = true })
-	hi("@variable.member", { fg = p.mint })
-
-	hi("@keyword", { fg = p.fg_bright, bold = kw_bold })
-	hi("@keyword.function", { fg = p.fg_bright, bold = kw_bold })
-	hi("@keyword.operator", { fg = p.fg_bright, bold = kw_bold })
-	hi("@keyword.return", { fg = p.fg_bright, bold = kw_bold })
-	hi("@keyword.import", { fg = italic_imp and p.fg_bright or p.fg, italic = italic_imp })
-	hi("@keyword.modifier", { fg = p.fg_bright, bold = kw_bold })
-	hi("@keyword.repeat", { fg = p.fg_bright, bold = kw_bold })
-	hi("@keyword.conditional", { fg = p.fg_bright, bold = kw_bold })
-	hi("@keyword.conditional.ternary", { fg = p.fg_bright, bold = kw_bold })
-	hi("@keyword.exception", { fg = p.red, bold = true })
-	hi("@keyword.directive", { fg = p.red })
-	hi("@keyword.coroutine", { fg = p.red })
-
-	hi("@type", { fg = p.amber })
-	hi("@type.builtin", { fg = p.amber, italic = true })
-	hi("@type.definition", { fg = p.amber, bold = true })
-	hi("@type.qualifier", { fg = p.fg_bright, bold = kw_bold })
-
-	hi("@module", { fg = p.fg_bright })
-	hi("@module.builtin", { fg = p.fg_bright, italic = true })
-	hi("@namespace", { fg = p.fg_bright })
-
-	hi("@constant", { fg = p.amber })
-	hi("@constant.builtin", { fg = p.amber, italic = true })
-	hi("@constant.macro", { fg = p.sky })
-
-	hi("@attribute", { fg = p.sky })
-	hi("@attribute.builtin", { fg = p.sky, italic = true })
-
-	hi("@property", { fg = p.mint })
-
-	-- Data-format files: keys ARE structure, distinguish from values
-	hi("@property.json", { fg = p.sky })
-	hi("@property.jsonc", { fg = p.sky })
-	hi("@property.yaml", { fg = p.sky })
-	hi("@property.toml", { fg = p.sky })
-	hi("@property.ini", { fg = p.sky })
-	hi("@property.hcl", { fg = p.sky })
-	hi("@property.terraform", { fg = p.sky })
-	hi("@property.gitconfig", { fg = p.sky })
-	hi("@property.sshconfig", { fg = p.sky })
-	hi("@property.systemd", { fg = p.sky })
-	hi("@property.kdl", { fg = p.sky })
-	hi("@property.hyprlang", { fg = p.sky })
-
 	-- markup
 	hi("@markup.strong", { fg = p.fg_bright, bold = true })
 	hi("@markup.italic", { fg = p.fg, italic = true })
@@ -132,22 +49,6 @@ function M.load()
 	hi("@markup.list", { fg = p.fg_dim })
 	hi("@markup.list.checked", { fg = p.mint })
 	hi("@markup.list.unchecked", { fg = p.fg_dim })
-
-	-- tags
-	hi("@tag", { fg = p.sky })
-	hi("@tag.builtin", { fg = p.sky, italic = true })
-	hi("@tag.attribute", { fg = p.rose })
-	hi("@tag.delimiter", { fg = p.fg_dim })
-
-	-- misc
-	hi("@operator", { fg = p.fg_dim })
-	hi("@label", { fg = p.fg_bright, bold = kw_bold })
-	hi("@error", { fg = p.red, bold = true })
-	hi("@none", { fg = p.fg })
-	hi("@conceal", { fg = p.comment })
-	hi("@diff.plus", { link = "DiffAdd" })
-	hi("@diff.minus", { link = "DiffDelete" })
-	hi("@diff.delta", { link = "DiffChange" })
 
 	-- ── LSP semantic tokens ────────────────────────────────────────────────────
 	hi("@lsp.type.class", { link = "@type" })
