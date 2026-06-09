@@ -6,7 +6,7 @@ local p = require("stark").palette
 
 return {
 	normal = {
-		a = { fg = p.bg, bg = p.teal, gui = "bold" },
+		a = { fg = p.bg, bg = p.mint, gui = "bold" },
 		b = { fg = p.fg, bg = p.bg_code },
 		c = { fg = p.fg_dim, bg = p.bg },
 	},
@@ -16,7 +16,7 @@ return {
 		c = { fg = p.fg_dim, bg = p.bg },
 	},
 	visual = {
-		a = { fg = p.bg, bg = p.purple, gui = "bold" },
+		a = { fg = p.bg, bg = p.rose, gui = "bold" },
 		b = { fg = p.fg, bg = p.bg_code },
 		c = { fg = p.fg_dim, bg = p.bg },
 	},
@@ -26,7 +26,7 @@ return {
 		c = { fg = p.fg_dim, bg = p.bg },
 	},
 	command = {
-		a = { fg = p.bg, bg = p.orange, gui = "bold" },
+		a = { fg = p.bg, bg = p.amber, gui = "bold" },
 		b = { fg = p.fg, bg = p.bg_code },
 		c = { fg = p.fg_dim, bg = p.bg },
 	},

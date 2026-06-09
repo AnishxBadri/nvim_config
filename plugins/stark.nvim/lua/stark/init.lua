@@ -1,78 +1,6 @@
 local M = {}
 
--- ┌─────────────────────────────────────────────────────────────────────────┐
--- │  stark.nvim — palette                                                   │
--- │                                                                         │
--- │  Base: stark ghostty theme (#0d0d0d bg, #d4d4d4 fg)                     │
--- │  Accents: derived from the site's high-contrast monochrome+color style  │
--- │  Added: rose, cyan, and lifted comment/dim values for true readability  │
--- └─────────────────────────────────────────────────────────────────────────┘
-
-M.palette = {
-	-- ── Backgrounds (pure black → dark grey ramp) ─────────────────────────────
-	bg = "#0d0d0d", -- editor canvas
-	bg_code = "#111111", -- sidebars, float windows, statusline
-	bg_select = "#1e1e1e", -- visual selection, active list items
-	bg_hover = "#282828", -- cursorline, hover highlight
-	bg_line = "#1a1a1a", -- diff/git line backgrounds base
-
-	-- ── Foregrounds (greyscale ramp, all readable on #0a0a0a) ─────────────────
-	--    Contrast ratios against #0a0a0a:
-	--    comment  #585858  →  4.6:1  (passes AA for large text / UI)
-	--    fg_dim   #8a8a8a  →  8.1:1  (passes AA)
-	--    fg       #d4d4d4  → 14.6:1  (passes AAA)
-	--    fg_bright #f0f0f0 → 17.3:1  (passes AAA)
-	--    white    #ffffff  → 19.1:1  (passes AAA)
-	comment = "#585858", -- (dark grey) comments, folds, invisible chars
-	fg_dim = "#8a8a8a", -- (dim grey) line numbers, inactive UI, inlay hints
-	fg = "#d4d4d4", -- (mid grey) normal text
-	fg_bright = "#f0f0f0", -- (light grey) emphasized identifiers, active labels
-	white = "#ffffff", -- search bg text, full-bright pop
-
-	-- ── Syntax accents ────────────────────────────────────────────────────────
-	--    All chosen for maximum contrast on #0a0a0a (all pass AA at minimum)
-	--    and for clear visual separation from each other.
-	--
-	--    red    — errors, exceptions, delete
-	--    orange — constants, numbers, warnings
-	--    yellow — search matches, special chars, match parens
-	--    green  — types, structs, namespaces, diff add
-	--    teal   — strings (warm green-cyan, very readable)
-	--    cyan   — escape sequences, regex, interpolation (cool blue-cyan)
-	--    sky    — functions, methods (bright blue)
-	--    blue   — keywords, control flow, statements
-	--    purple — preprocessor, macros, decorators, annotations
-	--    rose   — parameters, HTML attributes, object keys (warm pink)
-	--             fills the gap between red (error) and purple (macro)
-	--             gives parameters their own distinct identity
-	red = "#ef4444",
-	orange = "#f59e0b",
-	yellow = "#fbbf24",
-	green = "#22c55e",
-	teal = "#00CF9C",
-	cyan = "#22d3ee", -- added: cool cyan, distinct from warm teal
-	sky = "#01AEEF",
-	blue = "#3b82f6",
-	purple = "#8b5cf6",
-	rose = "#fb7185", -- added: warm pink for params/keys/attributes
-	lime = "#c6ff5e",
-
-	-- ── Bright variants (terminal ANSI + vibrant diagnostic accents) ──────────
-	red_br = "#f87171",
-	orange_br = "#fbbf24", -- added
-	green_br = "#4ade80",
-	teal_br = "#34d399", -- added
-	sky_br = "#38bdf8", -- added
-	blue_br = "#60a5fa",
-	purple_br = "#a78bfa",
-	rose_br = "#fda4af", -- added
-
-	-- ── Diff tint backgrounds (derived: accent at ~8% opacity on #0a0a0a) ─────
-	diff_add = "#0d2818",
-	diff_chg = "#261a06",
-	diff_del = "#280d0d",
-	diff_txt = "#332209",
-}
+M.palette = require("stark.palette")
 
 M.load = function()
 	vim.cmd("highlight clear")
@@ -97,8 +25,8 @@ M.load = function()
 	hi("FloatFooter", { fg = p.fg_dim, bg = p.bg_code })
 
 	hi("ColorColumn", { bg = p.bg_code })
-	hi("CursorLine", { bg = p.bg_hover })
-	hi("CursorColumn", { bg = p.bg_hover })
+	hi("CursorLine", { bg = p.bg_subtle })
+	hi("CursorColumn", { bg = p.bg_subtle })
 	hi("CursorLineNr", { fg = p.fg_bright, bold = true })
 	hi("LineNr", { fg = p.fg_dim })
 	hi("LineNrAbove", { fg = p.fg_dim })
@@ -108,8 +36,8 @@ M.load = function()
 	hi("FoldColumn", { fg = p.fg_dim, bg = p.bg })
 	hi("Folded", { fg = p.fg_dim, bg = p.bg_code, italic = true })
 
-	hi("VertSplit", { fg = p.bg_hover, bg = p.bg })
-	hi("WinSeparator", { fg = p.bg_hover, bg = p.bg })
+	hi("VertSplit", { fg = p.mint, bg = p.bg })
+	hi("WinSeparator", { fg = p.mint, bg = p.bg })
 
 	hi("StatusLine", { fg = p.fg, bg = p.bg_code })
 	hi("StatusLineNC", { fg = p.fg_dim, bg = p.bg_code })
@@ -119,15 +47,15 @@ M.load = function()
 	hi("TabLineSel", { fg = p.fg_bright, bg = p.bg, bold = true })
 
 	hi("Pmenu", { fg = p.fg, bg = p.bg_code })
-	hi("PmenuSel", { fg = p.fg_bright, bg = p.bg_select, bold = true })
+	hi("PmenuSel", { fg = p.fg_bright, bg = p.bg_hover, bold = true })
 	hi("PmenuSbar", { bg = p.bg_hover })
 	hi("PmenuThumb", { bg = p.fg_dim })
 	hi("PmenuExtra", { fg = p.fg_dim, bg = p.bg_code })
-	hi("PmenuExtraSel", { fg = p.fg_dim, bg = p.bg_select })
+	hi("PmenuExtraSel", { fg = p.fg_dim, bg = p.bg_hover })
 	hi("PmenuKind", { fg = p.sky, bg = p.bg_code })
-	hi("PmenuKindSel", { fg = p.sky, bg = p.bg_select })
+	hi("PmenuKindSel", { fg = p.sky, bg = p.bg_hover })
 
-	hi("WildMenu", { fg = p.fg_bright, bg = p.bg_select })
+	hi("WildMenu", { fg = p.fg_bright, bg = p.bg_hover })
 	hi("EndOfBuffer", { fg = p.bg_hover })
 	hi("NonText", { fg = p.bg_hover })
 	hi("SpecialKey", { fg = p.comment })
@@ -138,27 +66,27 @@ M.load = function()
 	hi("VisualNOS", { bg = p.bg_select })
 	hi("SelectionHighlightBackground", { bg = p.bg_select })
 
-	hi("Search", { fg = p.bg, bg = p.yellow })
+	hi("Search", { fg = p.bg, bg = p.amber_br })
 	hi("IncSearch", { fg = p.bg, bg = p.sky })
-	hi("CurSearch", { fg = p.bg, bg = p.teal })
+	hi("CurSearch", { fg = p.bg, bg = p.mint })
 	hi("Substitute", { fg = p.bg, bg = p.red })
 
-	hi("MatchParen", { fg = p.yellow, bold = true, underline = true })
-	hi("QuickFixLine", { fg = p.yellow, bold = true })
+	hi("MatchParen", { fg = p.amber_br, bold = true, underline = true })
+	hi("QuickFixLine", { fg = p.amber_br, bold = true })
 	hi("qfLineNr", { fg = p.fg_dim })
 	hi("qfFileName", { fg = p.sky })
 
 	hi("MsgArea", { fg = p.fg })
 	hi("MsgSeparator", { fg = p.comment })
-	hi("MoreMsg", { fg = p.green, bold = true })
+	hi("MoreMsg", { fg = p.mint, bold = true })
 	hi("Question", { fg = p.sky })
-	hi("WarningMsg", { fg = p.orange, bold = true })
+	hi("WarningMsg", { fg = p.amber, bold = true })
 	hi("ErrorMsg", { fg = p.red, bold = true })
 
 	hi("SpellBad", { undercurl = true, sp = p.red })
-	hi("SpellCap", { undercurl = true, sp = p.blue })
-	hi("SpellLocal", { undercurl = true, sp = p.cyan })
-	hi("SpellRare", { undercurl = true, sp = p.purple })
+	hi("SpellCap", { undercurl = true, sp = p.sky })
+	hi("SpellLocal", { undercurl = true, sp = p.mint })
+	hi("SpellRare", { undercurl = true, sp = p.sky_br })
 
 	hi("Title", { fg = p.fg_bright, bold = true })
 	hi("Directory", { fg = p.sky })
@@ -166,170 +94,159 @@ M.load = function()
 	hi("helpSectionDelim", { fg = p.comment })
 
 	-- ── Diff ───────────────────────────────────────────────────────────────────
-	hi("DiffAdd", { fg = p.green, bg = p.diff_add })
-	hi("DiffChange", { fg = p.orange, bg = p.diff_chg })
+	hi("DiffAdd", { fg = p.mint, bg = p.diff_add })
+	hi("DiffChange", { fg = p.amber, bg = p.diff_chg })
 	hi("DiffDelete", { fg = p.red, bg = p.diff_del })
-	hi("DiffText", { fg = p.yellow, bg = p.diff_txt, bold = true })
-	hi("Added", { fg = p.green })
-	hi("Changed", { fg = p.orange })
+	hi("DiffText", { fg = p.amber_br, bg = p.diff_txt, bold = true })
+	hi("Added", { fg = p.mint })
+	hi("Changed", { fg = p.amber })
 	hi("Removed", { fg = p.red })
 
-	-- ── Syntax ─────────────────────────────────────────────────────────────────
+	-- ── Legacy vim syntax ──────────────────────────────────────────────────────
 	hi("Comment", { fg = p.comment, italic = true })
 	hi("SpecialComment", { fg = p.fg_dim, italic = true })
 
-	hi("Constant", { fg = p.orange })
-	hi("String", { fg = p.teal })
-	hi("Character", { fg = p.teal })
-	hi("Number", { fg = p.orange })
-	hi("Float", { fg = p.orange })
-	hi("Boolean", { fg = p.purple }) -- true/false distinct from numbers
+	hi("Constant", { fg = p.amber })
+	hi("String", { fg = p.mint })
+	hi("Character", { fg = p.mint })
+	hi("Number", { fg = p.amber })
+	hi("Float", { fg = p.amber })
+	hi("Boolean", { fg = p.amber })
 
 	hi("Identifier", { fg = p.fg })
-	hi("Function", { fg = p.sky })
+	hi("Function", { fg = p.amber_br })
 
-	hi("Statement", { fg = p.blue })
-	hi("Conditional", { fg = p.blue, bold = true })
-	hi("Repeat", { fg = p.blue, bold = true })
-	hi("Label", { fg = p.blue })
+	hi("Statement", { fg = p.fg_bright, bold = true })
+	hi("Conditional", { fg = p.fg_bright, bold = true })
+	hi("Repeat", { fg = p.fg_bright, bold = true })
+	hi("Label", { fg = p.fg_bright, bold = true })
 	hi("Operator", { fg = p.fg_dim })
-	hi("Keyword", { fg = p.lime, bold = true })
+	hi("Keyword", { fg = p.fg_bright, bold = true })
 	hi("Exception", { fg = p.red, bold = true })
 
-	hi("PreProc", { fg = p.purple })
-	hi("Include", { fg = p.purple })
-	hi("Define", { fg = p.purple })
-	hi("Macro", { fg = p.purple })
-	hi("PreCondit", { fg = p.purple })
+	hi("PreProc", { fg = p.sky })
+	hi("Include", { fg = p.sky })
+	hi("Define", { fg = p.sky })
+	hi("Macro", { fg = p.sky })
+	hi("PreCondit", { fg = p.sky })
 
-	hi("Type", { fg = p.orange })
-	hi("StorageClass", { fg = p.blue })
-	hi("Structure", { fg = p.green })
-	hi("Typedef", { fg = p.green })
+	hi("Type", { fg = p.amber })
+	hi("StorageClass", { fg = p.fg_bright, bold = true })
+	hi("Structure", { fg = p.amber })
+	hi("Typedef", { fg = p.amber })
 
-	hi("Special", { fg = p.cyan }) -- escape sequences etc
-	hi("SpecialChar", { fg = p.cyan }) -- \n \t etc inside strings
+	hi("Special", { fg = p.amber_br })
+	hi("SpecialChar", { fg = p.amber_br })
 	hi("Tag", { fg = p.sky })
 	hi("Delimiter", { fg = p.fg_dim })
-	hi("Debug", { fg = p.orange })
+	hi("Debug", { fg = p.amber })
 
 	hi("Underlined", { underline = true })
 	hi("Ignore", { fg = p.comment })
 	hi("Error", { fg = p.red, bold = true })
-	hi("Todo", { fg = p.yellow, bold = true })
+	hi("Todo", { fg = p.amber_br, bold = true })
 
 	-- ── Treesitter ─────────────────────────────────────────────────────────────
-	-- comments
 	hi("@comment", { link = "Comment" })
 	hi("@comment.documentation", { fg = p.fg_dim, italic = true })
-	hi("@comment.todo", { fg = p.yellow, bold = true })
-	hi("@comment.warning", { fg = p.orange, bold = true })
+	hi("@comment.todo", { fg = p.amber_br, bold = true })
+	hi("@comment.warning", { fg = p.amber, bold = true })
 	hi("@comment.error", { fg = p.red, bold = true })
 	hi("@comment.note", { fg = p.sky, bold = true })
 
-	-- punctuation
 	hi("@punctuation.delimiter", { fg = p.fg_dim })
 	hi("@punctuation.bracket", { fg = p.fg_dim })
-	hi("@punctuation.special", { fg = p.cyan })
+	hi("@punctuation.special", { fg = p.teal })
 
-	-- literals
 	hi("@string", { link = "String" })
-	hi("@string.documentation", { fg = p.teal, italic = true })
-	hi("@string.regex", { fg = p.cyan }) -- cool cyan: distinct from string
-	hi("@string.escape", { fg = p.cyan, bold = true })
-	hi("@string.special", { fg = p.cyan })
+	hi("@string.documentation", { fg = p.mint, italic = true })
+	hi("@string.regex", { fg = p.teal })
+	hi("@string.escape", { fg = p.teal, bold = true })
+	hi("@string.special", { fg = p.teal })
 	hi("@string.special.url", { fg = p.sky, underline = true })
 	hi("@string.special.symbol", { fg = p.rose })
 	hi("@character", { link = "Character" })
-	hi("@character.special", { fg = p.cyan })
+	hi("@character.special", { fg = p.teal })
 	hi("@number", { link = "Number" })
 	hi("@number.float", { link = "Float" })
 	hi("@boolean", { link = "Boolean" })
 
-	-- functions
-	hi("@function", { fg = p.yellow })
-	hi("@function.builtin", { fg = p.yellow, italic = true })
-	hi("@function.call", { fg = p.yellow })
-	hi("@function.macro", { fg = p.purple })
-	hi("@function.method", { fg = p.yellow })
-	hi("@function.method.call", { fg = p.yellow })
-	hi("@constructor", { fg = p.yellow })
+	hi("@function", { fg = p.amber_br })
+	hi("@function.builtin", { fg = p.amber_br, italic = true })
+	hi("@function.call", { fg = p.amber_br })
+	hi("@function.macro", { fg = p.sky })
+	hi("@function.method", { fg = p.amber_br })
+	hi("@function.method.call", { fg = p.amber_br })
+	hi("@constructor", { fg = p.amber_br })
 
-	-- parameters and variables — rose fills the gap here
 	hi("@variable", { fg = p.fg })
-	hi("@variable.builtin", { fg = p.rose, italic = true }) -- self/this/super
-	hi("@variable.parameter", { fg = p.rose }) -- function parameters
+	hi("@variable.builtin", { fg = p.rose, italic = true })
+	hi("@variable.parameter", { fg = p.rose })
 	hi("@variable.parameter.builtin", { fg = p.rose, italic = true })
-	hi("@variable.member", { fg = p.teal }) -- object fields/members
+	hi("@variable.member", { fg = p.mint })
 
-	-- keywords
-	hi("@keyword", { fg = p.blue, bold = true })
-	hi("@keyword.function", { fg = p.lime, bold = true })
-	hi("@keyword.operator", { fg = p.blue })
-	hi("@keyword.return", { fg = p.blue, bold = true })
+	hi("@keyword", { fg = p.fg_bright, bold = true })
+	hi("@keyword.function", { fg = p.fg_bright, bold = true })
+	hi("@keyword.operator", { fg = p.fg_bright, bold = true })
+	hi("@keyword.return", { fg = p.fg_bright, bold = true })
 	hi("@keyword.import", { fg = p.fg })
-	hi("@keyword.modifier", { fg = p.blue })
-	hi("@keyword.repeat", { fg = p.blue, bold = true })
-	hi("@keyword.conditional", { fg = p.blue, bold = true })
-	hi("@keyword.conditional.ternary", { fg = p.blue })
+	hi("@keyword.modifier", { fg = p.fg_bright, bold = true })
+	hi("@keyword.repeat", { fg = p.fg_bright, bold = true })
+	hi("@keyword.conditional", { fg = p.fg_bright, bold = true })
+	hi("@keyword.conditional.ternary", { fg = p.fg_bright, bold = true })
 	hi("@keyword.exception", { fg = p.red, bold = true })
 	hi("@keyword.directive", { fg = p.red })
 	hi("@keyword.coroutine", { fg = p.red })
 
-	-- types
-	hi("@type", { fg = p.green })
-	hi("@type.builtin", { fg = p.green, italic = true })
-	hi("@type.definition", { fg = p.green, bold = true })
-	hi("@type.qualifier", { fg = p.blue })
+	hi("@type", { fg = p.amber })
+	hi("@type.builtin", { fg = p.amber, italic = true })
+	hi("@type.definition", { fg = p.amber, bold = true })
+	hi("@type.qualifier", { fg = p.fg_bright, bold = true })
 
-	-- modules / namespaces
 	hi("@module", { fg = p.fg_bright })
 	hi("@module.builtin", { fg = p.fg_bright, italic = true })
 	hi("@namespace", { fg = p.fg_bright })
 
-	-- constants
-	hi("@constant", { fg = p.orange })
-	hi("@constant.builtin", { fg = p.orange, italic = true })
-	hi("@constant.macro", { fg = p.purple })
+	hi("@constant", { fg = p.amber })
+	hi("@constant.builtin", { fg = p.amber, italic = true })
+	hi("@constant.macro", { fg = p.sky })
 
-	-- attributes / decorators
-	hi("@attribute", { fg = p.purple })
-	hi("@attribute.builtin", { fg = p.purple, italic = true })
+	hi("@attribute", { fg = p.sky })
+	hi("@attribute.builtin", { fg = p.sky, italic = true })
 
-	-- properties / fields
-	hi("@property", { fg = p.teal })
+	hi("@property", { fg = p.mint })
 
-	-- markup (markdown / rst)
+	-- markup
 	hi("@markup.strong", { fg = p.fg_bright, bold = true })
 	hi("@markup.italic", { fg = p.fg, italic = true })
 	hi("@markup.strikethrough", { fg = p.fg_dim, strikethrough = true })
 	hi("@markup.underline", { underline = true })
 	hi("@markup.heading.1", { fg = p.sky, bold = true })
-	hi("@markup.heading.2", { fg = p.teal, bold = true })
-	hi("@markup.heading.3", { fg = p.green, bold = true })
-	hi("@markup.heading.4", { fg = p.yellow, bold = true })
-	hi("@markup.heading.5", { fg = p.orange, bold = true })
+	hi("@markup.heading.2", { fg = p.mint, bold = true })
+	hi("@markup.heading.3", { fg = p.mint_br, bold = true })
+	hi("@markup.heading.4", { fg = p.amber_br, bold = true })
+	hi("@markup.heading.5", { fg = p.amber, bold = true })
 	hi("@markup.heading.6", { fg = p.rose, bold = true })
 	hi("@markup.quote", { fg = p.fg_dim, italic = true })
-	hi("@markup.math", { fg = p.cyan })
+	hi("@markup.math", { fg = p.amber_br })
 	hi("@markup.link", { fg = p.sky, underline = true })
-	hi("@markup.link.label", { fg = p.teal })
+	hi("@markup.link.label", { fg = p.mint })
 	hi("@markup.link.url", { fg = p.sky, underline = true })
-	hi("@markup.raw", { fg = p.teal, bg = p.bg_code })
-	hi("@markup.raw.block", { fg = p.teal, bg = p.bg_code })
+	hi("@markup.raw", { fg = p.mint, bg = p.bg_code })
+	hi("@markup.raw.block", { fg = p.mint, bg = p.bg_code })
 	hi("@markup.list", { fg = p.fg_dim })
-	hi("@markup.list.checked", { fg = p.green })
+	hi("@markup.list.checked", { fg = p.mint })
 	hi("@markup.list.unchecked", { fg = p.fg_dim })
 
-	-- tags (HTML/JSX)
-	hi("@tag", { fg = p.blue })
-	hi("@tag.builtin", { fg = p.blue, italic = true })
-	hi("@tag.attribute", { fg = p.rose }) -- rose: clearly not a tag name
+	-- tags
+	hi("@tag", { fg = p.sky })
+	hi("@tag.builtin", { fg = p.sky, italic = true })
+	hi("@tag.attribute", { fg = p.rose })
 	hi("@tag.delimiter", { fg = p.fg_dim })
 
 	-- misc
 	hi("@operator", { fg = p.fg_dim })
-	hi("@label", { fg = p.blue })
+	hi("@label", { fg = p.fg_bright, bold = true })
 	hi("@error", { fg = p.red, bold = true })
 	hi("@none", { fg = p.fg })
 	hi("@conceal", { fg = p.comment })
@@ -340,13 +257,13 @@ M.load = function()
 	-- ── LSP semantic tokens ────────────────────────────────────────────────────
 	hi("@lsp.type.class", { link = "@type" })
 	hi("@lsp.type.comment", { link = "Comment" })
-	hi("@lsp.type.decorator", { fg = p.purple })
+	hi("@lsp.type.decorator", { fg = p.sky })
 	hi("@lsp.type.enum", { link = "@type" })
-	hi("@lsp.type.enumMember", { fg = p.orange })
+	hi("@lsp.type.enumMember", { fg = p.amber })
 	hi("@lsp.type.function", { link = "@function" })
-	hi("@lsp.type.interface", { fg = p.green })
+	hi("@lsp.type.interface", { fg = p.amber })
 	hi("@lsp.type.keyword", { link = "@keyword" })
-	hi("@lsp.type.macro", { fg = p.purple })
+	hi("@lsp.type.macro", { fg = p.sky })
 	hi("@lsp.type.method", { link = "@function.method" })
 	hi("@lsp.type.namespace", { link = "@module" })
 	hi("@lsp.type.number", { link = "@number" })
@@ -357,49 +274,49 @@ M.load = function()
 	hi("@lsp.type.string", { link = "@string" })
 	hi("@lsp.type.struct", { link = "@type" })
 	hi("@lsp.type.type", { link = "@type" })
-	hi("@lsp.type.typeParameter", { fg = p.green })
+	hi("@lsp.type.typeParameter", { fg = p.amber })
 	hi("@lsp.type.variable", { link = "@variable" })
-	hi("@lsp.typemod.function.defaultLibrary", { fg = p.sky, italic = true })
+	hi("@lsp.typemod.function.defaultLibrary", { fg = p.amber_br, italic = true })
 	hi("@lsp.typemod.variable.defaultLibrary", { fg = p.rose, italic = true })
-	hi("@lsp.typemod.variable.readonly", { fg = p.orange })
-	hi("@lsp.typemod.keyword.documentation", { fg = p.purple })
+	hi("@lsp.typemod.variable.readonly", { fg = p.fg })
+	hi("@lsp.typemod.keyword.documentation", { fg = p.sky })
 
 	-- ── Diagnostics ────────────────────────────────────────────────────────────
 	hi("DiagnosticError", { fg = p.red })
-	hi("DiagnosticWarn", { fg = p.orange })
+	hi("DiagnosticWarn", { fg = p.amber })
 	hi("DiagnosticInfo", { fg = p.sky })
-	hi("DiagnosticHint", { fg = p.teal })
-	hi("DiagnosticOk", { fg = p.green })
+	hi("DiagnosticHint", { fg = p.mint })
+	hi("DiagnosticOk", { fg = p.mint })
 
 	hi("DiagnosticSignError", { fg = p.red })
-	hi("DiagnosticSignWarn", { fg = p.orange })
+	hi("DiagnosticSignWarn", { fg = p.amber })
 	hi("DiagnosticSignInfo", { fg = p.sky })
-	hi("DiagnosticSignHint", { fg = p.teal })
+	hi("DiagnosticSignHint", { fg = p.mint })
 
 	hi("DiagnosticVirtualTextError", { fg = p.red, italic = true })
-	hi("DiagnosticVirtualTextWarn", { fg = p.orange, italic = true })
+	hi("DiagnosticVirtualTextWarn", { fg = p.amber, italic = true })
 	hi("DiagnosticVirtualTextInfo", { fg = p.sky, italic = true })
-	hi("DiagnosticVirtualTextHint", { fg = p.teal, italic = true })
-	hi("DiagnosticVirtualTextOk", { fg = p.green, italic = true })
+	hi("DiagnosticVirtualTextHint", { fg = p.mint, italic = true })
+	hi("DiagnosticVirtualTextOk", { fg = p.mint, italic = true })
 
 	hi("DiagnosticUnderlineError", { undercurl = true, sp = p.red })
-	hi("DiagnosticUnderlineWarn", { undercurl = true, sp = p.orange })
+	hi("DiagnosticUnderlineWarn", { undercurl = true, sp = p.amber })
 	hi("DiagnosticUnderlineInfo", { undercurl = true, sp = p.sky })
-	hi("DiagnosticUnderlineHint", { undercurl = true, sp = p.teal })
+	hi("DiagnosticUnderlineHint", { undercurl = true, sp = p.mint })
 
 	hi("DiagnosticFloatingError", { fg = p.red })
-	hi("DiagnosticFloatingWarn", { fg = p.orange })
+	hi("DiagnosticFloatingWarn", { fg = p.amber })
 	hi("DiagnosticFloatingInfo", { fg = p.sky })
-	hi("DiagnosticFloatingHint", { fg = p.teal })
+	hi("DiagnosticFloatingHint", { fg = p.mint })
 
 	hi("DiagnosticDeprecated", { fg = p.fg_dim, strikethrough = true })
 	hi("DiagnosticUnnecessary", { fg = p.comment, italic = true })
 
 	-- ── LSP references / misc ──────────────────────────────────────────────────
-	hi("LspReferenceText", { bg = p.bg_select })
-	hi("LspReferenceRead", { bg = p.bg_select })
-	hi("LspReferenceWrite", { bg = p.bg_select, underline = true })
-	hi("LspSignatureActiveParameter", { fg = p.yellow, bold = true, underline = true })
+	hi("LspReferenceText", { bg = p.bg_hover })
+	hi("LspReferenceRead", { bg = p.bg_hover })
+	hi("LspReferenceWrite", { bg = p.bg_hover, underline = true })
+	hi("LspSignatureActiveParameter", { fg = p.amber_br, bold = true, underline = true })
 	hi("LspInlayHint", { fg = p.comment, bg = p.bg_code, italic = true })
 	hi("LspCodeLens", { fg = p.comment, italic = true })
 	hi("LspCodeLensSeparator", { fg = p.comment })
@@ -409,23 +326,23 @@ M.load = function()
 	hi("TelescopePromptNormal", { fg = p.fg, bg = p.bg_code })
 	hi("TelescopeResultsNormal", { fg = p.fg, bg = p.bg_code })
 	hi("TelescopePreviewNormal", { fg = p.fg, bg = p.bg })
-	hi("TelescopeBorder", { fg = p.bg_hover, bg = p.bg_code })
+	hi("TelescopeBorder", { fg = p.gray, bg = p.bg_code })
 	hi("TelescopePromptBorder", { fg = p.sky, bg = p.bg_code })
-	hi("TelescopeResultsBorder", { fg = p.bg_hover, bg = p.bg_code })
-	hi("TelescopePreviewBorder", { fg = p.bg_hover, bg = p.bg })
+	hi("TelescopeResultsBorder", { fg = p.gray, bg = p.bg_code })
+	hi("TelescopePreviewBorder", { fg = p.gray, bg = p.bg })
 	hi("TelescopePromptPrefix", { fg = p.sky })
 	hi("TelescopePromptCounter", { fg = p.fg_dim })
-	hi("TelescopeSelection", { fg = p.fg_bright, bg = p.bg_select })
-	hi("TelescopeSelectionCaret", { fg = p.sky, bg = p.bg_select })
-	hi("TelescopeMultiSelection", { fg = p.teal, bg = p.bg_select })
-	hi("TelescopeMultiIcon", { fg = p.teal })
+	hi("TelescopeSelection", { fg = p.fg_bright, bg = p.bg_hover })
+	hi("TelescopeSelectionCaret", { fg = p.sky, bg = p.bg_hover })
+	hi("TelescopeMultiSelection", { fg = p.mint, bg = p.bg_hover })
+	hi("TelescopeMultiIcon", { fg = p.mint })
 	hi("TelescopeTitle", { fg = p.fg_bright, bold = true })
 	hi("TelescopePromptTitle", { fg = p.bg, bg = p.sky, bold = true })
 	hi("TelescopeResultsTitle", { fg = p.fg_dim })
-	hi("TelescopePreviewTitle", { fg = p.bg, bg = p.teal, bold = true })
+	hi("TelescopePreviewTitle", { fg = p.bg, bg = p.mint, bold = true })
 	hi("TelescopeMatching", { fg = p.sky, bold = true })
-	hi("TelescopeResultsDiffAdd", { fg = p.green })
-	hi("TelescopeResultsDiffChange", { fg = p.orange })
+	hi("TelescopeResultsDiffAdd", { fg = p.mint })
+	hi("TelescopeResultsDiffChange", { fg = p.amber })
 	hi("TelescopeResultsDiffDelete", { fg = p.red })
 	hi("TelescopeResultsDiffUntracked", { fg = p.fg_dim })
 
@@ -437,27 +354,27 @@ M.load = function()
 	hi("CmpItemMenu", { fg = p.fg_dim, italic = true })
 	hi("CmpItemKindDefault", { fg = p.fg_dim })
 	hi("CmpItemKindText", { fg = p.fg })
-	hi("CmpItemKindKeyword", { fg = p.blue })
+	hi("CmpItemKindKeyword", { fg = p.fg_bright })
 	hi("CmpItemKindVariable", { fg = p.fg })
-	hi("CmpItemKindConstant", { fg = p.orange })
+	hi("CmpItemKindConstant", { fg = p.amber })
 	hi("CmpItemKindReference", { fg = p.rose })
-	hi("CmpItemKindValue", { fg = p.orange })
-	hi("CmpItemKindFunction", { fg = p.sky })
-	hi("CmpItemKindMethod", { fg = p.sky })
-	hi("CmpItemKindConstructor", { fg = p.green })
-	hi("CmpItemKindClass", { fg = p.green })
-	hi("CmpItemKindInterface", { fg = p.green })
-	hi("CmpItemKindStruct", { fg = p.green })
-	hi("CmpItemKindEvent", { fg = p.purple })
-	hi("CmpItemKindEnum", { fg = p.green })
-	hi("CmpItemKindUnit", { fg = p.orange })
+	hi("CmpItemKindValue", { fg = p.amber })
+	hi("CmpItemKindFunction", { fg = p.amber_br })
+	hi("CmpItemKindMethod", { fg = p.amber_br })
+	hi("CmpItemKindConstructor", { fg = p.amber_br })
+	hi("CmpItemKindClass", { fg = p.amber })
+	hi("CmpItemKindInterface", { fg = p.amber })
+	hi("CmpItemKindStruct", { fg = p.amber })
+	hi("CmpItemKindEvent", { fg = p.sky })
+	hi("CmpItemKindEnum", { fg = p.amber })
+	hi("CmpItemKindUnit", { fg = p.amber })
 	hi("CmpItemKindModule", { fg = p.fg_bright })
-	hi("CmpItemKindProperty", { fg = p.teal })
-	hi("CmpItemKindField", { fg = p.teal })
-	hi("CmpItemKindTypeParameter", { fg = p.green })
-	hi("CmpItemKindEnumMember", { fg = p.orange })
+	hi("CmpItemKindProperty", { fg = p.mint })
+	hi("CmpItemKindField", { fg = p.mint })
+	hi("CmpItemKindTypeParameter", { fg = p.amber })
+	hi("CmpItemKindEnumMember", { fg = p.amber })
 	hi("CmpItemKindOperator", { fg = p.fg_dim })
-	hi("CmpItemKindSnippet", { fg = p.purple })
+	hi("CmpItemKindSnippet", { fg = p.sky })
 	hi("CmpItemKindColor", { fg = p.rose })
 	hi("CmpItemKindFile", { fg = p.fg_dim })
 	hi("CmpItemKindFolder", { fg = p.sky })
@@ -470,52 +387,52 @@ M.load = function()
 	hi("NeoTreeDirectoryName", { fg = p.fg })
 	hi("NeoTreeDirectoryIcon", { fg = p.sky })
 	hi("NeoTreeFileName", { fg = p.fg })
-	hi("NeoTreeFileNameOpened", { fg = p.teal, italic = true })
+	hi("NeoTreeFileNameOpened", { fg = p.mint, italic = true })
 	hi("NeoTreeFileIcon", { fg = p.fg_dim })
-	hi("NeoTreeSymbolicLinkTarget", { fg = p.cyan, italic = true })
-	hi("NeoTreeGitAdded", { fg = p.green })
+	hi("NeoTreeSymbolicLinkTarget", { fg = p.amber_br, italic = true })
+	hi("NeoTreeGitAdded", { fg = p.mint })
 	hi("NeoTreeGitConflict", { fg = p.red, bold = true })
 	hi("NeoTreeGitDeleted", { fg = p.red })
 	hi("NeoTreeGitIgnored", { fg = p.comment })
-	hi("NeoTreeGitModified", { fg = p.orange })
-	hi("NeoTreeGitUnstaged", { fg = p.orange })
+	hi("NeoTreeGitModified", { fg = p.amber })
+	hi("NeoTreeGitUnstaged", { fg = p.amber })
 	hi("NeoTreeGitUntracked", { fg = p.fg_dim })
-	hi("NeoTreeGitStaged", { fg = p.green })
-	hi("NeoTreeIndentMarker", { fg = p.bg_hover })
+	hi("NeoTreeGitStaged", { fg = p.mint })
+	hi("NeoTreeIndentMarker", { fg = p.gray })
 	hi("NeoTreeExpander", { fg = p.fg_dim })
 	hi("NeoTreeTabActive", { fg = p.fg_bright, bg = p.bg, bold = true })
 	hi("NeoTreeTabInactive", { fg = p.fg_dim, bg = p.bg_code })
 	hi("NeoTreeTabSeparatorActive", { fg = p.bg, bg = p.bg })
 	hi("NeoTreeTabSeparatorInactive", { fg = p.bg_code, bg = p.bg_code })
-	hi("NeoTreeWinSeparator", { fg = p.bg_hover, bg = p.bg_code })
+	hi("NeoTreeWinSeparator", { fg = p.gray, bg = p.bg_code })
 
 	-- ── which-key ──────────────────────────────────────────────────────────────
-	hi("WhichKey", { fg = p.lime })
-	hi("WhichKeyGroup", { fg = p.teal, bold = true })
+	hi("WhichKey", { fg = p.sky })
+	hi("WhichKeyGroup", { fg = p.mint, bold = true })
 	hi("WhichKeyDesc", { fg = p.fg })
 	hi("WhichKeySeperator", { fg = p.comment })
 	hi("WhichKeySeparator", { fg = p.comment })
 	hi("WhichKeyFloat", { bg = p.bg_code })
-	hi("WhichKeyBorder", { fg = p.bg_hover, bg = p.bg_code })
+	hi("WhichKeyBorder", { fg = p.gray, bg = p.bg_code })
 	hi("WhichKeyValue", { fg = p.fg_dim })
 	hi("WhichKeyTitle", { fg = p.fg_bright, bold = true })
 
 	-- ── nvim-notify ────────────────────────────────────────────────────────────
 	hi("NotifyERRORBorder", { fg = p.red })
-	hi("NotifyWARNBorder", { fg = p.orange })
+	hi("NotifyWARNBorder", { fg = p.amber })
 	hi("NotifyINFOBorder", { fg = p.sky })
 	hi("NotifyDEBUGBorder", { fg = p.comment })
-	hi("NotifyTRACEBorder", { fg = p.purple })
+	hi("NotifyTRACEBorder", { fg = p.sky_br })
 	hi("NotifyERRORIcon", { fg = p.red })
-	hi("NotifyWARNIcon", { fg = p.orange })
+	hi("NotifyWARNIcon", { fg = p.amber })
 	hi("NotifyINFOIcon", { fg = p.sky })
 	hi("NotifyDEBUGIcon", { fg = p.comment })
-	hi("NotifyTRACEIcon", { fg = p.purple })
+	hi("NotifyTRACEIcon", { fg = p.sky_br })
 	hi("NotifyERRORTitle", { fg = p.red, bold = true })
-	hi("NotifyWARNTitle", { fg = p.orange, bold = true })
+	hi("NotifyWARNTitle", { fg = p.amber, bold = true })
 	hi("NotifyINFOTitle", { fg = p.sky, bold = true })
 	hi("NotifyDEBUGTitle", { fg = p.fg_dim, bold = true })
-	hi("NotifyTRACETitle", { fg = p.purple, bold = true })
+	hi("NotifyTRACETitle", { fg = p.sky_br, bold = true })
 	hi("NotifyERRORBody", { fg = p.fg, bg = p.bg_code })
 	hi("NotifyWARNBody", { fg = p.fg, bg = p.bg_code })
 	hi("NotifyINFOBody", { fg = p.fg, bg = p.bg_code })
@@ -523,65 +440,65 @@ M.load = function()
 	hi("NotifyTRACEBody", { fg = p.fg, bg = p.bg_code })
 
 	-- ── indent-blankline ───────────────────────────────────────────────────────
-	hi("IblIndent", { fg = p.bg_hover })
-	hi("IblScope", { fg = p.comment })
-	hi("IblWhitespace", { fg = p.bg_hover })
-	hi("IndentBlanklineChar", { fg = p.bg_hover })
-	hi("IndentBlanklineContextChar", { fg = p.comment })
-	hi("IndentBlanklineContextStart", { underline = true, sp = p.comment })
+	hi("IblIndent", { fg = p.gray })
+	hi("IblScope", { fg = p.fg_dim })
+	hi("IblWhitespace", { fg = p.gray })
+	hi("IndentBlanklineChar", { fg = p.gray })
+	hi("IndentBlanklineContextChar", { fg = p.fg_dim })
+	hi("IndentBlanklineContextStart", { underline = true, sp = p.fg_dim })
 
 	-- ── gitsigns ───────────────────────────────────────────────────────────────
-	hi("GitSignsAdd", { fg = p.green })
-	hi("GitSignsChange", { fg = p.orange })
+	hi("GitSignsAdd", { fg = p.mint })
+	hi("GitSignsChange", { fg = p.amber })
 	hi("GitSignsDelete", { fg = p.red })
 	hi("GitSignsTopDelete", { fg = p.red })
-	hi("GitSignsChangeDelete", { fg = p.orange })
+	hi("GitSignsChangeDelete", { fg = p.amber })
 	hi("GitSignsUntracked", { fg = p.fg_dim })
-	hi("GitSignsAddNr", { fg = p.green })
-	hi("GitSignsChangeNr", { fg = p.orange })
+	hi("GitSignsAddNr", { fg = p.mint })
+	hi("GitSignsChangeNr", { fg = p.amber })
 	hi("GitSignsDeleteNr", { fg = p.red })
 	hi("GitSignsAddLn", { bg = p.diff_add })
 	hi("GitSignsChangeLn", { bg = p.diff_chg })
 	hi("GitSignsDeleteLn", { bg = p.diff_del })
-	hi("GitSignsAddInline", { fg = p.green, bg = p.diff_add, bold = true })
-	hi("GitSignsChangeInline", { fg = p.yellow, bg = p.diff_txt, bold = true })
+	hi("GitSignsAddInline", { fg = p.mint, bg = p.diff_add, bold = true })
+	hi("GitSignsChangeInline", { fg = p.amber_br, bg = p.diff_txt, bold = true })
 	hi("GitSignsDeleteInline", { fg = p.red, bg = p.diff_del, bold = true })
 
 	-- ── lazy.nvim ──────────────────────────────────────────────────────────────
-	hi("LazyH1", { fg = p.bg, bg = p.teal, bold = true })
+	hi("LazyH1", { fg = p.bg, bg = p.mint, bold = true })
 	hi("LazyH2", { fg = p.fg_bright, bold = true })
 	hi("LazyButton", { fg = p.fg, bg = p.bg_code })
 	hi("LazyButtonActive", { fg = p.bg, bg = p.sky, bold = true })
 	hi("LazySpecial", { fg = p.sky })
-	hi("LazyReasonPlugin", { fg = p.purple })
-	hi("LazyReasonEvent", { fg = p.orange })
-	hi("LazyReasonKeys", { fg = p.teal })
+	hi("LazyReasonPlugin", { fg = p.sky })
+	hi("LazyReasonEvent", { fg = p.amber })
+	hi("LazyReasonKeys", { fg = p.mint })
 	hi("LazyReasonCmd", { fg = p.sky })
-	hi("LazyReasonFt", { fg = p.green })
-	hi("LazyProgressDone", { fg = p.green })
+	hi("LazyReasonFt", { fg = p.amber })
+	hi("LazyProgressDone", { fg = p.mint })
 	hi("LazyProgressTodo", { fg = p.fg_dim })
 	hi("LazyNoCond", { fg = p.comment })
 	hi("LazyDimmed", { fg = p.comment })
-	hi("LazyProp", { fg = p.teal })
-	hi("LazyValue", { fg = p.orange })
+	hi("LazyProp", { fg = p.mint })
+	hi("LazyValue", { fg = p.amber })
 	hi("LazyUrl", { fg = p.sky, underline = true })
-	hi("LazyCommit", { fg = p.teal })
-	hi("LazyCommitType", { fg = p.purple })
+	hi("LazyCommit", { fg = p.mint })
+	hi("LazyCommitType", { fg = p.sky })
 	hi("LazyCommitScope", { fg = p.rose })
 
-	-- ── snacks.nvim (LazyVim default) ─────────────────────────────────────────
-	hi("SnacksPickerBorder", { fg = p.bg_hover, bg = p.bg_code })
+	-- ── snacks.nvim ────────────────────────────────────────────────────────────
+	hi("SnacksPickerBorder", { fg = p.gray, bg = p.bg_code })
 	hi("SnacksPickerTitle", { fg = p.bg, bg = p.sky, bold = true })
-	hi("SnacksPickerPreviewTitle", { fg = p.bg, bg = p.teal, bold = true })
-	hi("SnacksPickerInputTitle", { fg = p.bg, bg = p.purple, bold = true })
+	hi("SnacksPickerPreviewTitle", { fg = p.bg, bg = p.mint, bold = true })
+	hi("SnacksPickerInputTitle", { fg = p.bg, bg = p.sky, bold = true })
 	hi("SnacksPickerNormal", { fg = p.fg, bg = p.bg_code })
 	hi("SnacksPickerPreview", { fg = p.fg, bg = p.bg })
 	hi("SnacksPickerPrompt", { fg = p.sky })
-	hi("SnacksPickerSearch", { fg = p.yellow, bold = true })
+	hi("SnacksPickerSearch", { fg = p.amber_br, bold = true })
 	hi("SnacksPickerMatch", { fg = p.sky, bold = true })
-	hi("SnacksPickerSelected", { fg = p.teal })
+	hi("SnacksPickerSelected", { fg = p.mint })
 	hi("SnacksPickerDir", { fg = p.fg_dim })
-	hi("SnacksDashboardHeader", { fg = p.teal })
+	hi("SnacksDashboardHeader", { fg = p.mint })
 	hi("SnacksDashboardFooter", { fg = p.comment, italic = true })
 	hi("SnacksDashboardDesc", { fg = p.fg })
 	hi("SnacksDashboardKey", { fg = p.sky })
@@ -589,77 +506,77 @@ M.load = function()
 	hi("SnacksDashboardSpecial", { fg = p.rose })
 	hi("SnacksDashboardDir", { fg = p.fg_dim })
 	hi("SnacksNotifierInfo", { fg = p.sky })
-	hi("SnacksNotifierWarn", { fg = p.orange })
+	hi("SnacksNotifierWarn", { fg = p.amber })
 	hi("SnacksNotifierError", { fg = p.red })
 	hi("SnacksNotifierDebug", { fg = p.comment })
-	hi("SnacksNotifierTrace", { fg = p.purple })
+	hi("SnacksNotifierTrace", { fg = p.sky_br })
 	hi("SnacksNotifierBorderInfo", { fg = p.sky })
-	hi("SnacksNotifierBorderWarn", { fg = p.orange })
+	hi("SnacksNotifierBorderWarn", { fg = p.amber })
 	hi("SnacksNotifierBorderError", { fg = p.red })
 	hi("SnacksNotifierBorderDebug", { fg = p.comment })
-	hi("SnacksNotifierBorderTrace", { fg = p.purple })
-	hi("SnacksIndent", { fg = p.bg_hover })
-	hi("SnacksIndentScope", { fg = p.comment })
-	hi("SnacksWordUnderCursor", { bg = p.bg_select })
+	hi("SnacksNotifierBorderTrace", { fg = p.sky_br })
+	hi("SnacksIndent", { fg = p.gray })
+	hi("SnacksIndentScope", { fg = p.fg_dim })
+	hi("SnacksWordUnderCursor", { bg = p.bg_hover })
 
 	-- ── mini.nvim ──────────────────────────────────────────────────────────────
-	hi("MiniStatuslineModeNormal", { fg = p.bg, bg = p.teal, bold = true })
+	hi("MiniStatuslineModeNormal", { fg = p.bg, bg = p.mint, bold = true })
 	hi("MiniStatuslineModeInsert", { fg = p.bg, bg = p.sky, bold = true })
-	hi("MiniStatuslineModeVisual", { fg = p.bg, bg = p.purple, bold = true })
+	hi("MiniStatuslineModeVisual", { fg = p.bg, bg = p.rose, bold = true })
 	hi("MiniStatuslineModeReplace", { fg = p.bg, bg = p.red, bold = true })
-	hi("MiniStatuslineModeCommand", { fg = p.bg, bg = p.orange, bold = true })
-	hi("MiniStatuslineModeOther", { fg = p.bg, bg = p.rose, bold = true })
+	hi("MiniStatuslineModeCommand", { fg = p.bg, bg = p.amber, bold = true })
+	hi("MiniStatuslineModeOther", { fg = p.bg, bg = p.gray, bold = true })
 	hi("MiniStatuslineFilename", { fg = p.fg, bg = p.bg_code })
 	hi("MiniStatuslineFileinfo", { fg = p.fg_dim, bg = p.bg_code })
 	hi("MiniStatuslineDevinfo", { fg = p.fg_dim, bg = p.bg_code })
 	hi("MiniStatuslineInactive", { fg = p.fg_dim, bg = p.bg_code })
-	hi("MiniCursorword", { bg = p.bg_select })
-	hi("MiniCursorwordCurrent", { bg = p.bg_select, underline = true })
-	hi("MiniIndentscopeSymbol", { fg = p.comment })
+	hi("MiniCursorword", { bg = p.bg_hover })
+	hi("MiniCursorwordCurrent", { bg = p.bg_hover, underline = true })
+	hi("MiniIndentscopeSymbol", { fg = p.fg_dim })
 	hi("MiniIndentscopePrefix", { nocombine = true })
-	hi("MiniPickMatchCurrent", { fg = p.fg_bright, bg = p.bg_select })
+	hi("MiniPickMatchCurrent", { fg = p.fg_bright, bg = p.bg_hover })
 	hi("MiniPickMatchRanges", { fg = p.sky, bold = true })
-	hi("MiniPickBorder", { fg = p.bg_hover, bg = p.bg_code })
-	hi("MiniPickBorderBusy", { fg = p.orange, bg = p.bg_code })
+	hi("MiniPickBorder", { fg = p.gray, bg = p.bg_code })
+	hi("MiniPickBorderBusy", { fg = p.amber, bg = p.bg_code })
 	hi("MiniPickBorderText", { fg = p.sky, bg = p.bg_code, bold = true })
 	hi("MiniPickNormal", { fg = p.fg, bg = p.bg_code })
 	hi("MiniPickPrompt", { fg = p.sky, bg = p.bg_code, bold = true })
 	hi("MiniPickHeader", { fg = p.rose, bold = true })
 	hi("MiniPickIconDirectory", { fg = p.sky })
 	hi("MiniPickIconFile", { fg = p.fg_dim })
-	hi("MiniDiffSignAdd", { fg = p.green })
-	hi("MiniDiffSignChange", { fg = p.orange })
+	hi("MiniDiffSignAdd", { fg = p.mint })
+	hi("MiniDiffSignChange", { fg = p.amber })
 	hi("MiniDiffSignDelete", { fg = p.red })
 	hi("MiniDiffOverAdd", { bg = p.diff_add })
 	hi("MiniDiffOverChange", { bg = p.diff_chg })
 	hi("MiniDiffOverDelete", { bg = p.diff_del })
 	hi("MiniDiffOverContext", { bg = p.bg_code })
-	hi("MiniJump", { fg = p.bg, bg = p.yellow })
-	hi("MiniJump2dSpot", { fg = p.yellow, bold = true, nocombine = true })
-	hi("MiniJump2dSpotAhead", { fg = p.teal, nocombine = true })
-	hi("MiniJump2dSpotUnique", { fg = p.orange, bold = true, nocombine = true })
+	hi("MiniJump", { fg = p.bg, bg = p.amber_br })
+	hi("MiniJump2dSpot", { fg = p.amber_br, bold = true, nocombine = true })
+	hi("MiniJump2dSpotAhead", { fg = p.mint, nocombine = true })
+	hi("MiniJump2dSpotUnique", { fg = p.amber, bold = true, nocombine = true })
 	hi("MiniHipatternsFixme", { fg = p.bg, bg = p.red, bold = true })
-	hi("MiniHipatternsTodo", { fg = p.bg, bg = p.yellow, bold = true })
+	hi("MiniHipatternsTodo", { fg = p.bg, bg = p.amber_br, bold = true })
 	hi("MiniHipatternsNote", { fg = p.bg, bg = p.sky, bold = true })
-	hi("MiniHipatternsHack", { fg = p.bg, bg = p.orange, bold = true })
+	hi("MiniHipatternsHack", { fg = p.bg, bg = p.amber, bold = true })
 
-	-- ── Terminal colors (mirrors Ghostty palette order exactly) ───────────────
-	vim.g.terminal_color_0 = p.bg -- black
-	vim.g.terminal_color_1 = p.red -- red
-	vim.g.terminal_color_2 = p.green -- green
-	vim.g.terminal_color_3 = p.purple -- yellow slot  → purple
-	vim.g.terminal_color_4 = p.blue -- blue
-	vim.g.terminal_color_5 = p.sky -- magenta slot → sky
-	vim.g.terminal_color_6 = p.orange -- cyan slot    → orange
-	vim.g.terminal_color_7 = p.fg -- white
-	vim.g.terminal_color_8 = p.comment -- bright black
-	vim.g.terminal_color_9 = p.red_br -- bright red
-	vim.g.terminal_color_10 = p.green_br -- bright green
-	vim.g.terminal_color_11 = p.yellow -- bright yellow
-	vim.g.terminal_color_12 = p.blue_br -- bright blue
-	vim.g.terminal_color_13 = p.purple_br -- bright magenta
-	vim.g.terminal_color_14 = p.white -- bright cyan  → white
-	vim.g.terminal_color_15 = p.fg_bright -- bright white
+	-- ── Terminal colors (mirrors stark ghostty palette) ────────────────────────
+	vim.g.terminal_color_0 = p.black
+	vim.g.terminal_color_1 = p.red
+	vim.g.terminal_color_2 = p.mint
+	vim.g.terminal_color_3 = p.amber
+	vim.g.terminal_color_4 = p.mint
+	vim.g.terminal_color_5 = p.sky
+	vim.g.terminal_color_6 = p.amber
+	vim.g.terminal_color_7 = p.fg
+	vim.g.terminal_color_8 = p.gray
+	vim.g.terminal_color_9 = p.red_br
+	vim.g.terminal_color_10 = p.mint_br
+	vim.g.terminal_color_11 = p.amber_br
+	vim.g.terminal_color_12 = p.mint_br
+	vim.g.terminal_color_13 = p.sky_br
+	vim.g.terminal_color_14 = p.amber_br
+	vim.g.terminal_color_15 = p.fg_bright
 end
 
 return M
