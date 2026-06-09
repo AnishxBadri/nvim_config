@@ -2,6 +2,7 @@ local M = {}
 
 local GROUPS = {
 	"editor",
+	"syntax",
 }
 
 function M.load()
@@ -25,50 +26,6 @@ function M.load()
 	local hi = function(group, opts)
 		hl[group] = opts
 	end
-
-	-- ── Legacy vim syntax ──────────────────────────────────────────────────────
-	hi("Comment", { fg = p.comment, italic = italic_c })
-	hi("SpecialComment", { fg = p.fg_dim, italic = italic_c })
-
-	hi("Constant", { fg = p.amber })
-	hi("String", { fg = p.mint })
-	hi("Character", { fg = p.mint })
-	hi("Number", { fg = p.amber })
-	hi("Float", { fg = p.amber })
-	hi("Boolean", { fg = p.amber })
-
-	hi("Identifier", { fg = p.fg })
-	hi("Function", { fg = p.amber_br })
-
-	hi("Statement", { fg = p.fg_bright, bold = kw_bold })
-	hi("Conditional", { fg = p.fg_bright, bold = kw_bold })
-	hi("Repeat", { fg = p.fg_bright, bold = kw_bold })
-	hi("Label", { fg = p.fg_bright, bold = kw_bold })
-	hi("Operator", { fg = p.fg_dim })
-	hi("Keyword", { fg = p.fg_bright, bold = kw_bold })
-	hi("Exception", { fg = p.red, bold = true })
-
-	hi("PreProc", { fg = p.sky })
-	hi("Include", { fg = p.sky })
-	hi("Define", { fg = p.sky })
-	hi("Macro", { fg = p.sky })
-	hi("PreCondit", { fg = p.sky })
-
-	hi("Type", { fg = p.amber })
-	hi("StorageClass", { fg = p.fg_bright, bold = kw_bold })
-	hi("Structure", { fg = p.amber })
-	hi("Typedef", { fg = p.amber })
-
-	hi("Special", { fg = p.amber_br })
-	hi("SpecialChar", { fg = p.amber_br })
-	hi("Tag", { fg = p.sky })
-	hi("Delimiter", { fg = p.fg_dim })
-	hi("Debug", { fg = p.amber })
-
-	hi("Underlined", { underline = true })
-	hi("Ignore", { fg = p.comment })
-	hi("Error", { fg = p.red, bold = true })
-	hi("Todo", { fg = p.amber_br, bold = true })
 
 	-- ── Treesitter ─────────────────────────────────────────────────────────────
 	hi("@comment", { link = "Comment" })
@@ -139,6 +96,20 @@ function M.load()
 	hi("@attribute.builtin", { fg = p.sky, italic = true })
 
 	hi("@property", { fg = p.mint })
+
+	-- Data-format files: keys ARE structure, distinguish from values
+	hi("@property.json", { fg = p.sky })
+	hi("@property.jsonc", { fg = p.sky })
+	hi("@property.yaml", { fg = p.sky })
+	hi("@property.toml", { fg = p.sky })
+	hi("@property.ini", { fg = p.sky })
+	hi("@property.hcl", { fg = p.sky })
+	hi("@property.terraform", { fg = p.sky })
+	hi("@property.gitconfig", { fg = p.sky })
+	hi("@property.sshconfig", { fg = p.sky })
+	hi("@property.systemd", { fg = p.sky })
+	hi("@property.kdl", { fg = p.sky })
+	hi("@property.hyprlang", { fg = p.sky })
 
 	-- markup
 	hi("@markup.strong", { fg = p.fg_bright, bold = true })
