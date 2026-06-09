@@ -1,5 +1,9 @@
 local M = {}
 
+local GROUPS = {
+	"editor",
+}
+
 function M.load()
 	local cfg = require("stark.config").options
 	local p = vim.deepcopy(require("stark.palette"))
@@ -13,100 +17,14 @@ function M.load()
 	vim.o.termguicolors = true
 	vim.g.colors_name = "stark"
 
-	local bg = cfg.transparent and "NONE" or p.bg
 	local italic_c = cfg.italic_comments or nil
 	local italic_imp = cfg.italic_imports or nil
 	local kw_bold = cfg.bold_keywords or nil
 
+	local hl = {}
 	local hi = function(group, opts)
-		vim.api.nvim_set_hl(0, group, opts)
+		hl[group] = opts
 	end
-
-	-- ── Editor chrome ──────────────────────────────────────────────────────────
-	hi("Normal", { fg = p.fg, bg = bg })
-	hi("NormalNC", { fg = p.fg, bg = bg })
-	hi("NormalFloat", { fg = p.fg, bg = p.bg_code })
-	hi("FloatBorder", { fg = p.fg_dim, bg = p.bg_code })
-	hi("FloatTitle", { fg = p.fg_bright, bg = p.bg_code, bold = true })
-	hi("FloatFooter", { fg = p.fg_dim, bg = p.bg_code })
-
-	hi("ColorColumn", { bg = p.bg_code })
-	hi("CursorLine", { bg = p.bg_subtle })
-	hi("CursorColumn", { bg = p.bg_subtle })
-	hi("CursorLineNr", { fg = p.fg_bright, bold = true })
-	hi("LineNr", { fg = p.fg_dim })
-	hi("LineNrAbove", { fg = p.fg_dim })
-	hi("LineNrBelow", { fg = p.fg_dim })
-
-	hi("SignColumn", { fg = p.fg_dim, bg = bg })
-	hi("FoldColumn", { fg = p.fg_dim, bg = bg })
-	hi("Folded", { fg = p.fg_dim, bg = p.bg_code, italic = true })
-
-	hi("VertSplit", { fg = p.mint, bg = bg })
-	hi("WinSeparator", { fg = p.mint, bg = bg })
-
-	hi("StatusLine", { fg = p.fg, bg = p.bg_code })
-	hi("StatusLineNC", { fg = p.fg_dim, bg = p.bg_code })
-
-	hi("TabLine", { fg = p.fg_dim, bg = p.bg_code })
-	hi("TabLineFill", { bg = p.bg_code })
-	hi("TabLineSel", { fg = p.fg_bright, bg = p.bg, bold = true })
-
-	hi("Pmenu", { fg = p.fg, bg = p.bg_code })
-	hi("PmenuSel", { fg = p.fg_bright, bg = p.bg_hover, bold = true })
-	hi("PmenuSbar", { bg = p.bg_hover })
-	hi("PmenuThumb", { bg = p.fg_dim })
-	hi("PmenuExtra", { fg = p.fg_dim, bg = p.bg_code })
-	hi("PmenuExtraSel", { fg = p.fg_dim, bg = p.bg_hover })
-	hi("PmenuKind", { fg = p.sky, bg = p.bg_code })
-	hi("PmenuKindSel", { fg = p.sky, bg = p.bg_hover })
-
-	hi("WildMenu", { fg = p.fg_bright, bg = p.bg_hover })
-	hi("EndOfBuffer", { fg = p.bg_hover })
-	hi("NonText", { fg = p.bg_hover })
-	hi("SpecialKey", { fg = p.comment })
-	hi("Whitespace", { fg = p.bg_hover })
-	hi("Conceal", { fg = p.fg_dim })
-
-	hi("Visual", { bg = p.bg_select })
-	hi("VisualNOS", { bg = p.bg_select })
-	hi("SelectionHighlightBackground", { bg = p.bg_select })
-
-	hi("Search", { fg = p.bg, bg = p.amber_br })
-	hi("IncSearch", { fg = p.bg, bg = p.sky })
-	hi("CurSearch", { fg = p.bg, bg = p.mint })
-	hi("Substitute", { fg = p.bg, bg = p.red })
-
-	hi("MatchParen", { fg = p.amber_br, bold = true, underline = true })
-	hi("QuickFixLine", { fg = p.amber_br, bold = true })
-	hi("qfLineNr", { fg = p.fg_dim })
-	hi("qfFileName", { fg = p.sky })
-
-	hi("MsgArea", { fg = p.fg })
-	hi("MsgSeparator", { fg = p.comment })
-	hi("MoreMsg", { fg = p.mint, bold = true })
-	hi("Question", { fg = p.sky })
-	hi("WarningMsg", { fg = p.amber, bold = true })
-	hi("ErrorMsg", { fg = p.red, bold = true })
-
-	hi("SpellBad", { undercurl = true, sp = p.red })
-	hi("SpellCap", { undercurl = true, sp = p.sky })
-	hi("SpellLocal", { undercurl = true, sp = p.mint })
-	hi("SpellRare", { undercurl = true, sp = p.sky_br })
-
-	hi("Title", { fg = p.fg_bright, bold = true })
-	hi("Directory", { fg = p.sky })
-	hi("helpHyperTextJump", { fg = p.sky, underline = true })
-	hi("helpSectionDelim", { fg = p.comment })
-
-	-- ── Diff ───────────────────────────────────────────────────────────────────
-	hi("DiffAdd", { fg = p.mint, bg = p.diff_add })
-	hi("DiffChange", { fg = p.amber, bg = p.diff_chg })
-	hi("DiffDelete", { fg = p.red, bg = p.diff_del })
-	hi("DiffText", { fg = p.amber_br, bg = p.diff_txt, bold = true })
-	hi("Added", { fg = p.mint })
-	hi("Changed", { fg = p.amber })
-	hi("Removed", { fg = p.red })
 
 	-- ── Legacy vim syntax ──────────────────────────────────────────────────────
 	hi("Comment", { fg = p.comment, italic = italic_c })
@@ -565,6 +483,21 @@ function M.load()
 	hi("MiniHipatternsTodo", { fg = p.bg, bg = p.amber_br, bold = true })
 	hi("MiniHipatternsNote", { fg = p.bg, bg = p.sky, bold = true })
 	hi("MiniHipatternsHack", { fg = p.bg, bg = p.amber, bold = true })
+
+	-- ── Merge extracted group files ────────────────────────────────────────────
+	for _, name in ipairs(GROUPS) do
+		for k, v in pairs(require("stark.groups." .. name).get(p, cfg)) do
+			hl[k] = v
+		end
+	end
+
+	-- ── User overrides ─────────────────────────────────────────────────────────
+	cfg.on_highlights(hl, p)
+
+	-- ── Apply ──────────────────────────────────────────────────────────────────
+	for k, v in pairs(hl) do
+		vim.api.nvim_set_hl(0, k, v)
+	end
 
 	-- ── Terminal colors (mirrors stark ghostty palette) ────────────────────────
 	vim.g.terminal_color_0 = p.black
