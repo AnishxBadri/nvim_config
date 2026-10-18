@@ -1,7 +1,8 @@
 return {
 	{
-		dir = vim.fn.expand("~/.config/nvim/plugins/stark.nvim"),
+		"AnishxBadri/Stark.nvim",
 		name = "stark.nvim",
+		dev = true,
 		lazy = false,
 		priority = 1000,
 		dependencies = { "rktjmp/lush.nvim" },

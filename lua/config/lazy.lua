@@ -22,6 +22,11 @@ require("lazy").setup({
   defaults = {
     lazy = false,
   },
+  -- dev = true plugins load from ~/Desktop/<name>, or clone from GitHub if missing
+  dev = {
+    path = "~/Desktop",
+    fallback = true,
+  },
   install = { colorscheme = { "tokyonight", "habamax" } },
   checker = { enabled = true },
   performance = {
